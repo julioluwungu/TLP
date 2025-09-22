@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabelas</title>
+    <style>
+        table {
+            overflow-x: scroll;
+        }
+
+        table#cor01 td {
+            background-color: lightgrey;
+        }
+
+        table#cor01 thead td {
+            background-color: darkgrey;
+        }
+
+        table#cor01 .numero {
+            text-align: center;
+        }
+
+        table#cor02 > thead > tr > th{
+            background-color: gray;
+            color: white;
+        }
+
+        table#cor02 > tbody > tr > td {
+            background-color: lightgrey;
+        }
+
+        table#cor02 table.cinza {
+            background-color: darkgray;
+        }
+
+        table#cor02 .azul {
+            background-color: blue;
+        }
+
+        table#texto1, table#texto2 {
+            text-align: center;
+        }
+
+        table#texto1 .esquerda {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Tarefa de Tabelas</h1>
+    <hr>
+    <h2>Tabela de Produtos</h2>
+    <table border="1">
+        <tr>
+            <td>Categoria</td>
+            <td>Produto</td>
+            <td>Preço</td>
+        </tr>
+        <tr>
+            <td rowspan="3">Multimídia</td>
+            <td>Headphone</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>WebCam</td>
+            <td>13</td>
+        </tr>
+        <tr>
+            <td>Placa de Vídeo 512 MB</td>
+            <td>85</td>
+        </tr>
+    </table>
+    <br><hr><br>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Marca:</th>
+                <th>Modelo:</th>
+                <th>Ano:</th>
+                <th>Valor:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Volkswagen</td>
+                <td>Golf</td>
+                <td>2009</td>
+                <td>R$38.500</td>
+            </tr>
+            <tr>
+                <td>Fiat</td>
+                <td>Palio</td>
+                <td>2010</td>
+                <td>R$19.700</td>
+            </tr>
+            <tr>
+                <td>Honda</td>
+                <td>Civic</td>
+                <td>2012</td>
+                <td>R$61.500</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">O melhor preço da região</td>
+            </tr>
+        </tfoot>
+    </table>
+    <br><hr><br>
+    <table border="1">
+        <caption>Linguagens de programação</caption>
+        <thead>
+            <tr>
+                <td>Tipos de Linguagens</td>
+            </tr>
+            <tr>
+                <td>Linguagem\Uso</td>
+                <th>Web</th>
+                <th>Desktop</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>HTML</th>
+                <td>X</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>JavaScript</th>
+                <td>X</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>C</th>
+                <td></td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <th>C++</th>
+                <td></td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <th>PHP</th>
+                <td>X</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Java</th>
+                <td></td>
+                <td>X</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>by HTML Progressivo</td>
+            </tr>
+        </tfoot>
+    </table>
+    <br><hr><br>
+    <table border="1">
+        <caption>Linguagens de programação</caption>
+        <thead>
+            <tr>
+                <th colspan="2">Tipos de linguagens</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="3">Linguagens <br> para Web</td>
+                <td>HTML</td>
+            </tr>
+            <tr>
+                <td>JavaScript</td>
+            </tr>
+            <tr>
+                <td>PHP</td>
+            </tr>
+            <tr>
+                <td rowspan="3">Linguagens <br> para Desktop</td>
+                <td>C</td>
+            </tr>
+            <tr>
+                <td>C++</td>
+            </tr>
+            <tr>
+                <td>Java</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">by HTML Progressivo</td>
+            </tr>
+        </tfoot>
+    </table>
+    <br><hr><br>
+    <table border="1">
+        <thead>
+            <tr>
+                <th colspan="2">Colunas 1 e 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>linha 1, coluna 1</td>
+                <td>linha 1, coluna 2</td>
+            </tr>
+            <tr>
+                <td>linha 2, coluna 1</td>
+                <td>linha 2, coluna 2</td>
+            </tr>
+            <tr>
+                <th rowspan="3">3 linhas</th>
+                <td>uma linha</td>
+            </tr>
+            <tr>
+                <td>duas linhas</td>
+            </tr>
+            <tr>
+                <td>tres linhas</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><hr><br>
+    <table border="1" id="cor01">
+        <thead>
+            <tr>
+                <th colspan="4" style="background-color: grey; color: white;">Animais em perigo de extinção</th>
+            </tr>
+            <tr>
+                <td>Nome</td>
+                <td>Cabeças</td>
+                <td>Previsão 2010</td>
+                <td>Previsão 2020</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Baleia</td>
+                <td class="numero">6000</td>
+                <td class="numero">4000</td>
+                <td class="numero">1500</td>
+            </tr>
+            <tr>
+                <td>Urso Pardo</td>
+                <td class="numero">50</td>
+                <td colspan="2" rowspan="2" class="numero" style="background-color: red;">0</td>
+            </tr>
+            <tr>
+                <td>Lince</td>
+                <td class="numero">10</td>
+            </tr>
+            <tr>
+                <td>Tigre</td>
+                <td class="numero">300</td>
+                <td colspan="2" class="numero">210</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><hr><br>
+    <table border="1" id="cor02">
+        <thead>
+            <tr>
+                <th colspan="4">Climas de América do Sul</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Norte da <br> América de Sul. <br> Países como:</td>
+                <td>
+                    <table border="1" class="cinza">
+                        <tr><td>Venezuela</td></tr>
+                        <tr><td>Colômbia</td></tr>
+                        <tr><td>Equador</td></tr>
+                        <tr><td>Perú</td></tr>
+                    </table>
+                </td>
+                <td>Sul da América <br> do Sul, Países <br> como:</td>
+                <td>
+                    <table border="1" class="cinza">
+                       <tr><td>Argentina</td></tr>
+                       <tr><td>Chile</td></tr>
+                       <tr><td>Uruguai</td></tr>
+                       <tr><td>Paraguai</td></tr> 
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="azul">Floreesta Tropical, clima de <br> savana, clima marinho com <br> invernos secos.</td>
+                <td colspan="2" class="azul">Climas marítimos com <br> verões secos, com <br> invernos secos, climas <br> frios, clima de estepe, <br> clima desértico.</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><hr><br>
+    <table border="1" id="texto1">
+        <thead>
+            <tr>
+                <td rowspan="2">Tipo do <br> sal <br> Nº</td>
+                <td colspan="6">Composição %</td>
+                <td rowspan="2">Temperatura <br> de Fusão <br> (ºC)</td>
+                <td rowspan="2">Temperatura <br> de trabalho <br> (ºC)</td>
+            </tr>
+            <tr>
+                <td>BaCl2</td>
+                <td>NaCl</td>
+                <td>KC <br> 1</td>
+                <td>CaCl <br> 2</td>
+                <td>NaNO <br> 3</td>
+                <td>KNO <br> 3</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="9" class="esquerda">Sais para Autenticação:</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>98-100</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>950</td>
+                <td>1030-1300</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>80-90</td>
+                <td>10-20</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>870</td>
+                <td>930-1300</td>
+            </tr>
+            <tr>
+                <td colspan="9" class="esquerda">Sais para pré-aquecimento:</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>70</td>
+                <td>30</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>335</td>
+                <td>700-1035</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>55</td>
+                <td>20</td>
+                <td>25</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>550</td>
+                <td>590-925</td>
+            </tr>
+            <tr>
+                <td colspan="9" class="esquerda">Têmpera e revenimento:</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>30</td>
+                <td>20</td>
+                <td>-</td>
+                <td>50</td>
+                <td>-</td>
+                <td>-</td>
+                <td>450</td>
+                <td>500-675</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>50-80</td>
+                <td>20-45</td>
+                <td>250</td>
+                <td>285-575</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><hr><br>
+    <table border="1">
+        <caption>A5 - TIPO DE CONEXÃO PARA ACESSO À INTERNTET NO DOMICÍLIO <br> Percentual sobre o total de domicílios com acesso à Internet</caption>
+        <thead>
+            <tr>
+                <th colspan="2" rowspan="2">Percentual(%)</th>
+                <th rowspan="2">Modern Tradicional <br> (acesso discado linha <br> telefónica)</th>
+                <th colspan="5">Banda Larga</th>
+                <th rowspan="2">Outros</th>
+                <th rowspan="2">NS/NR</th>
+            </tr>
+            <tr>
+                <th>TOTAL <br> Banda <br> Larga</th>
+                <th>Modem digital via linha <br> telefônica (tecnologia <br> DSL)</th>
+                <th>Modem <br> via cabo</th>
+                <th>Conexão <br> via rádio</th>
+                <th>Conexão via <br> satélite</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th colspan="2">TOTAL BRASIL</th>
+                <td>20</td>
+                <td>66</td>
+                <td>23</td>
+                <td>25</td>
+                <td>14</td>
+                <td>3</td>
+                <td>6</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <th rowspan="2">ÁREA</th>
+                <th>URBANA</th>
+                <td>19</td>
+                <td>66</td>
+                <td>24</td>
+                <td>25</td>
+                <td>14</td>
+                <td>3</td>
+                <td>6</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <th>RURAL</th>
+                <td>21</td>
+                <td>55</td>
+                <td>17</td>
+                <td>14</td>
+                <td>20</td>
+                <td>5</td>
+                <td>8</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <th rowspan="5">REGIÕES DO <br> PAÍS</th>
+                <th>SUDESTE</th>
+                <td>22</td>
+                <td>65</td>
+                <td>21</td>
+                <td>30</td>
+                <td>11</td>
+                <td>3</td>
+                <td>4</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <th>NORDESTE</th>
+                <td>19</td>
+                <td>64</td>
+                <td>12</td>
+                <td>32</td>
+                <td>18</td>
+                <td>1</td>
+                <td>10</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <th>SUL</th>
+                <td>13</td>
+                <td>71</td>
+                <td>34</td>
+                <td>12</td>
+                <td>22</td>
+                <td>3</td>
+                <td>8</td>
+                <td>19</td>
+            </tr>
+            <tr>
+                <th>NORTE</th>
+                <td>31</td>
+                <td>49</td>
+                <td>23</td>
+                <td>11</td>
+                <td>11</td>
+                <td>5</td>
+                <td>14</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <th>CENTRO-OESTE</th>
+                <td>13</td>
+                <td>67</td>
+                <td>34</td>
+                <td>18</td>
+                <td>13</td>
+                <td>2</td>
+                <td>8</td>
+                <td>13</td>
+            </tr>
+            <tr>
+                <th rowspan="6">RENDA <br> FAMILIAR</th>
+                <th>Até R$465</th>
+                <td>16</td>
+                <td>51</td>
+                <td>14</td>
+                <td>20</td>
+                <td>14</td>
+                <td>3</td>
+                <td>12</td>
+                <td>21</td>
+            </tr>
+            <tr>
+                <th>R$466-R$930</th>
+                <td>22</td>
+                <td>61</td>
+                <td>18</td>
+                <td>24</td>
+                <td>15</td>
+                <td>4</td>
+                <td>4</td>
+                <td>14</td>
+            </tr>
+            <tr>
+                <th>R$931-R$1395</th>
+                <td>23</td>
+                <td>62</td>
+                <td>22</td>
+                <td>24</td>
+                <td>13</td>
+                <td>2</td>
+                <td>6</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <th>R$1396-R$2325</th>
+                <td>23</td>
+                <td>63</td>
+                <td>23</td>
+                <td>22</td>
+                <td>15</td>
+                <td>3</td>
+                <td>6</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th>R$2326-R$4650</th>
+                <td>16</td>
+                <td>75</td>
+                <td>32</td>
+                <td>28</td>
+                <td>11</td>
+                <td>4</td>
+                <td>7</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <th>R$4651 ou mais</th>
+                <td>12</td>
+                <td>78</td>
+                <td>27</td>
+                <td>34</td>
+                <td>16</td>
+                <td>1</td>
+                <td>6</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <th rowspan="4">CLASSE <br> SOCIAL</th>
+                <th>A</th>
+                <td>11</td>
+                <td>81</td>
+                <td>24</td>
+                <td>41</td>
+                <td>14</td>
+                <td>3</td>
+                <td>9</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <th>B</th>
+                <td>18</td>
+                <td>71</td>
+                <td>28</td>
+                <td>26</td>
+                <td>13</td>
+                <td>3</td>
+                <td>6</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <th>C</th>
+                <td>22</td>
+                <td>61</td>
+                <td>19</td>
+                <td>24</td>
+                <td>15</td>
+                <td>3</td>
+                <td>5</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <th>DE</th>
+                <td>26</td>
+                <td>41</td>
+                <td>10</td>
+                <td>15</td>
+                <td>15</td>
+                <td>2</td>
+                <td>3</td>
+                <td>29</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><hr><br>
+    <table border="1" id="texto2">
+        <img src="enfermagem.jpg" alt="Foto para Tabela" width="200px" style="display: block; margin: auto; margin-bottom: 10px;">
+        <caption>TABELA DE DILUIÇÃO DE MEDICAMENTOS INJETÁVEIS</caption>
+        <thead>
+            <tr>
+                <th rowspan="2">Nome Comercial <br> Nome genérico</th>
+                <th rowspan="2">Tempo <br> Infusão</th>
+                <th rowspan="2">Forma <br> Farmacêutica</th>
+                <th rowspan="2">Via de <br> Admnistração</th>
+                <th rowspan="2">Diluição <br> Volume <br> Usual</th>
+                <th colspan="2">Estabilidade</th>
+                <th rowspan="2">Observações</th>
+            </tr>
+            <tr>
+                <th>Medicamento <br> diluído em bolsa</th>
+                <th>Sobra na embalagem <br> original</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Adrenalina 1mg/mL <br> (Epinefina)</th>
+                <td>1mL/min</td>
+                <td>Já vem em <br> solução</td>
+                <td>IV infusão</td>
+                <td>Sem diluição</td>
+                <td>24 horas TA</td>
+                <td>Descartar</td>
+                <td>*Infusão continua usar equipo <br> Fotossensível.</td>
+            </tr>
+            <tr>
+                <th>Akinetan 51mg/mL <br> (Biperi de no)</th>
+                <td>3 minutos</td>
+                <td>Já vem em <br> solução</td>
+                <td>Bolus, IM</td>
+                <td>Sem diluição</td>
+                <td>Descartar</td>
+                <td>Descartar</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>Albimina humana</th>
+                <td>1mL/min</td>
+                <td>Já vem em <br> solução</td>
+                <td>IV infusão</td>
+                <td>Em geral sem <br> diluição, caso <br> necessário, diluir <br> em 50 a <br> 500mL de SF <br> 0,9%</td>
+                <td>Descartar</td>
+                <td>4 horas TA</td>
+                <td>*Não diluir em água destilada <br> * Velocidade de infusão não deve <br> exceder 30mL/min</td>
+            </tr>
+            <tr>
+                <th>Aminofilina 0,24g <br> 10mL</th>
+                <td>Não exceder <br> 25mg/min <br> Aprox. 30 min</td>
+                <td>Solução <br> injetável</td>
+                <td>IV (bem lento= <br> 3,5min) <br> IV Infusão <br> 240mg/100mL SF <br> 0,9% ou SG 5%</td>
+                <td>100mL SF 0,9%</td>
+                <td>TA: 24h</td>
+                <td>Descartar</td>
+                <td>* Não refrigerar por possível <br> Cristalização. <br> *também pode ser diluída em <br> SG5% 100mL <br> *Não admnistrar via IM.</td>
+            </tr>
+            <tr>
+                <th>Ampicilina 50 0mg <br> Ampicilina 1g <br> (Binotal)</th>
+                <td>IM: lento <br> IV Bolus: 3 min <br> IV Infusão: Lento <br> -30 <br> min</td>
+                <td>Pó para solução <br> injetável</td>
+                <td>IM: sem diluição <br> IV Bolus: 5-10mL AD <br> IV Infusão: 50mL SF <br> 0,9%</td>
+                <td>10mg/mL</td>
+                <td>Refrigeração 24h - até <br> 30mg/mL</td>
+                <td>Refrigeração 8h <br> *Já reconstituído com AD</td>
+                <td>*Não misturar com outras drogas <br> *Admnistrar com intervalo de 1-2h <br> com aminoglicosideos.</td>
+            </tr>
+            <tr>
+                <th>Amplictil 25mg/5mL <br> (Clorpromazina)</th>
+                <td>IV Bolus: 3-5 <br> minutos <br> IV Infusão: 30 <br> minutos</td>
+                <td>Solução <br> injetável</td>
+                <td>IM <br> IV Bolus <br> IV Infusão: diluir em <br> 15mL SF 0,9%</td>
+                <td>25mg/ 15mL SF <br> 0,9%</td>
+                <td>TA: 24h <br> * Protegido da luz.</td>
+                <td>Descartar</td>
+                <td>*Pode ser administrado sem diluir <br> em caso de crise. <br> * Não misturar na mesma seringa com Fenob arbital. <br> * Fotossensível em infusão <br> continua.</td>
+            </tr>
+            <tr>
+                <th>Ancoron 150mg/3mL <br> (Amiodarona)</th>
+                <td>IV Bolus: ACM <br> IV Infusão: 20 <br> min-2 h</td>
+                <td>Solução <br> injetável</td>
+                <td>IV Bolus - ACM <br> IV Infusão.</td>
+                <td>IV Bolus: ACM <br> IV Infusão</td>
+                <td>TA: 24h</td>
+                <td>Descartar</td>
+                <td>*Não pode ser diluído em Bolsa. <br> * Mais estável quando diluído em <br> SG 5%.</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
