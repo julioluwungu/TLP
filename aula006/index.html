@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulários</title>
+    <style>
+        div {
+            margin: 10px 0px;
+        }
+    </style>
+</head>
+<body>
+    <form action="#" method="post">
+        <div>
+            <label for="texto">Digite um Texto:</label>
+            <input type="text" name="text" id="texto" placeholder="Digite o seu nome">
+        </div>
+        <div>
+            <input type="datetime-local" name="" id="">
+            <input type="button" value="Enviar">
+        </div>
+        <div>
+            <label for="checar">Lembrar-me</label>
+            <input type="checkbox" name="checar" id="checa" onclick="checa()">
+        </div>
+    </form>
+
+    <script>
+        function checa() {
+            window.alert('olá')
+        }
+    </script>
+</body>
+</html>
