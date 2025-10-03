@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+div.conteiner {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    background-color: lightgrey;
+    padding: 10px;
+    border: 4px solid black;
+    gap: 20px;
+}
+
+div.conteiner div.card {
+    background-color: white;
+    height: 300px;
+    width: 250px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 5px solid blue;
+    outline: 5px solid purple;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+img {
+    width: 200px;
+    display: block;
+    margin: auto;
+}
+
+img:hover {
+    width: 250px;
+    border-radius: 10px;
+    transition: width 1s, border-radius 1s;
+}
+
+p {
+    text-align: center;
+}
+
+button {
+    width: 100px;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 637px) {
+    div.conteiner {
+        justify-content: center;
+    }
+}
