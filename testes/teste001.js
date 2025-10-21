@@ -1,5 +1,5 @@
 function ehPrimo(n) {
-    if (n < 2) return false;
+    if (n < 2) return false
     for (let i = 2; i <= parseInt(n ** 0.5) + 1; i++) {
         if (n % i === 0) return false
     }
@@ -16,7 +16,7 @@ btn.addEventListener('click', () => {
         btn.className = 'verde'
         mensagem.innerText = `{valor} é primo`
     } else {
-        btn.className = 'vermelho';
+        btn.className = 'vermelho'
         mensagem.innerText = `{valor} não é primo`
     }
     }
