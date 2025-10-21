@@ -1,2 +1,47 @@
 @charset "UTF-8";
 
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-image: linear-gradient(to bottom, lightgray, white, lightgray);
+}
+
+form {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+div {
+    margin: 10px;
+}
+
+div.name {
+    display: flex;
+    gap: 20px;
+    margin: 0px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    outline: none;
+    transition: 1s all ease-in-out;
+}
+
+input:is(:hover, :focus) {
+    border: 2px solid yellow;
+}
+
+input[value=Cadastrar] {
+    background-color: orange;
+}

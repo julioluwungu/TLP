@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#">
+        <div>
+            <input type="text" name="texto" id="texto" oninput="alterar()">
+        </div>
+        <div id="res"></div>
+        <div id="ras"></div>
+    </form>
+
+    <script>
+        function alterar() {
+            let texto = document.querySelector('input#texto').value
+            let res = document.querySelector('div#res')
+            let ras = document.querySelector('div#ras')
+            let vetor = []
+
+            res.innerHTML = texto
+            //ras.innerHTML = res.textContent.length
+            ras.innerHTML = texto
+            let txt = ''
+
+            for (let c = 0; c < texto.length; c++) {
+                vetor.push(texto[c])
+                if (c % 2 == 0) {
+                    vetor[c] = texto[c].toUpperCase()
+                } else {
+                    vetor[c] = texto[c].toLowerCase()
+                }
+            }
+
+            for (let c in vetor) {
+                txt += vetor[c]
+            } 
+            texto = txt
+        }
+    </script>
+</body>
+</html>

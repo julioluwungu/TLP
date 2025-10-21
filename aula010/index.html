@@ -7,9 +7,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form action="">
+    <form action="#">
+        <div class="name">
+            <div class="first-name">
+                <label for="primeiro-nome">Primeiro nome: </label>
+                <input type="text" name="primeiro-nome" id="primeiro-nome" placeholder="Primeiro nome">
+            </div>
+            <div class="last-name">
+                <label for="ultimo-nome">Sobrenome: </label>
+                <input type="text" name="ultimo-nome" id="ultimo-nome" placeholder="Sobrenome">
+            </div>
+        </div>
+        <div class="input-email">
+            <label for="email">Email: </label>
+            <input type="email" name="email" id="email" placeholder="exemplo@gmail.com">
+        </div>
+        <div class="input-password">
+            <label for="senha">Senha: </label>
+            <input type="password" name="senha" id="senha" placeholder="12345678">
+        </div>
         <div>
-            
+            <input type="button" value="Cadastrar">
         </div>
     </form>
     <script src="ambiente.js"></script>
