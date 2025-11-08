@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background-image: linear-gradient(to left, red, blue);
+}
+
+div.relogio {
+    height: 400px;
+    width: 400px;
+    border: 3px solid black;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+}
+
+div.n1 {--rotation: 30deg}
+div.n2 {--rotation: 60deg}
+div.n3 {--rotation: 90deg}
+div.n4 {--rotation: 120deg}
+div.n5 {--rotation: 150deg}
+div.n6 {--rotation: 180deg}
+div.n7 {--rotation: 210deg}
+div.n8 {--rotation: 240deg}
+div.n9 {--rotation: 270deg}
+div.n10 {--rotation: 300deg}
+div.n11 {--rotation: 330deg}
+div.n12 {--rotation: 0deg}
+
+div.number {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 1.7em;
+    text-align: center;
+    transform: rotate(var(--rotation));
+}
+
+div.time {
+    --rotation: 0;
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid white;
+    transform-origin: bottom;
+    z-index: 10;
+    transform: translateX(-50%) rotate(calc(var(--rotation) * 1deg));
+}
+
+div.relogio::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    z-index: 11;
+    background-color: black;
+    transform: translate(-50%, -50%);
+}
+
+div.segundo {
+    width: 3px;
+    height: 40%;
+    background-color: red;
+}
+
+div.minuto {
+    width: 8px;
+    height: 35%;
+    background-color: black;
+}
+
+div.hora {
+    width: 12px;
+    height: 30%;
+    background-color: black;
+}
+
+span.grau {
+    display: inline-block;
+    transform: rotate(var(--rotacao));
+}
+
+span.num1{--rotacao: -30deg;}
+span.num2{--rotacao: -60deg;}
+span.num3{--rotacao: -90deg;}
+span.num4{--rotacao: -120deg;}
+span.num5{--rotacao: -150deg;}
+span.num6{--rotacao: -180deg;}
+span.num7{--rotacao: -210deg;}
+span.num8{--rotacao: -240deg;}
+span.num9{--rotacao: -270deg;}
+span.num10{--rotacao: -300deg;}
+span.num11{--rotacao: -330deg;}
+span.num12{--rotacao: 0deg;}

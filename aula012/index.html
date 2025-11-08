@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" name="texto" id="texto">
+    <input type="button" value="Adicionar" onclick="adicionar()">
+    <ul id="container"></ul>
+
+    <script>
+        function adicionar() {
+            let texto = document.querySelector('input#texto').value
+            let container = document.querySelector('#container')
+            let li = document.createElement('li')
+            li.innerHTML = texto
+            container.prepend(li)
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+span.rodar {
+    display: inline-block;
+    font: 2rem Verdana, sans-serif;
+    animation: girar 2s linear infinite;
+}
+
+span.inverter {
+    display: inline-block;
+    transform: rotate(180deg);
+    color: red;
+}
+
+@keyframes girar {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

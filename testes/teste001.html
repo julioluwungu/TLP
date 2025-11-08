@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @keyframes girar {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        div.relogio {
+            margin: auto;
+            width: 500px;
+            height: 500px;
+            border: 20px solid brown;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        div.ponteiro {
+            background-color: black;
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform: translate(-50%, -50%);
+            transform-origin: bottom center;
+        }
+
+        div.segundo {
+            width: 5px;
+            height: 230px;
+            animation: girar 60s linear infinite;
+        }
+
+        div.minuto {
+            width: 10px;
+            height: 210px;
+            animation: girar 3600s linear infinite;
+        }
+
+        div.hora {
+            width: 15px;
+            height: 150px;
+            animation: girar 43200s linear infinite;
+        }
+
+        div.circulo {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: black;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="relogio">
+        <div class="ponteiro hora"></div>
+        <div class="ponteiro minuto"></div>
+        <div class="ponteiro segundo"></div>
+        <div class="circulo"></div>
+    </div>
+</body>
+</html>

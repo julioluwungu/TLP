@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transição da Esquerda para a Direita</title>
+  <style>
+    div {
+      width: 90vw;
+      height: 30px;
+      border: 1px solid black;
+      border-radius: 5px;
+      cursor: pointer;
+      background: linear-gradient(to right, red 50%, white 50%);
+      background-size: 200% 100%;
+      background-position: right center;
+      transition: background-position 10s ease-out;
+    }
+
+    div:hover {
+      background-position: left center;
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificando username</title>
+</head>
+<body>
+    <input type="text" name="username" id="username">
+    <button id="botao">Verificar</button>
+    <div id="res"></div>
+
+    <script>
+        const botao = document.querySelector('button#botao')
+        botao.addEventListener('click', verificar)
+        let userLista = ["Júlio", "Paulo", "Altino", "Luwungu"]
+
+        function verificar () {
+            const username = document.querySelector('input#username').value
+            const res = document.querySelector('div#res')
+            res.innerHTML = `Pesquisando por "${username}" no banco de dados...`
+            setTimeout(() => {
+                let resultado
+                if (userLista.includes(username)) resultado = `O nome "${username}" já existe no sistema.`
+                else resultado = `O nome "${username}" não existe no sistema.`
+                alert(resultado)
+                res.innerHTML = `Resultado: ${resultado}`
+            }, 3000)
+        }
+    </script>
+</body>
+</html>

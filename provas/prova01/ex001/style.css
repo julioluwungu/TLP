@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+div {
+    margin: 10px 0px;
+}
+
+div#res {
+    padding: 10px;
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+span.centro {
+    display: block;
+    text-align: center;
+    font-size: 1.5em;
+}

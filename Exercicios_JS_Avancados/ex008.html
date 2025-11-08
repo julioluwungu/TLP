@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barra de Download</title>
+    <style>
+        div#container {
+            border: 1px solid black;
+            width: 100%;
+            height: 20px;
+        }
+
+        div#barra {
+            background-color: lightskyblue;
+            height: 100%;
+            width: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="barra"></div>
+    </div>
+    <div id="porcentagem">0%</div>
+    <button onclick="iniciarDownload()">Baixar</button>
+    <script>
+        function iniciarDownload() {
+            const barra = document.getElementById("barra");
+            const porcentagem = document.getElementById("porcentagem");
+            let progresso = 0;
+
+            const intervalo = setInterval(() => {
+                let valorSorteado = Math.floor(Math.random() * 5)
+
+                let txt = barra.style.width
+                let valor = Number(txt.replace('%', ''))
+                if (valor + valorSorteado > 100) progresso += (100 - valor)
+                else progresso += valorSorteado
+
+                barra.style.width = progresso + '%';  // Corrigido aqui
+                porcentagem.textContent = progresso + '%'; // Corrigido aqui
+
+                if (progresso == 100) {
+                    clearInterval(intervalo);
+                    porcentagem.textContent = "Download completo";
+                }
+            }, 200);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+@keyframes rotacionar {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+span.girar {
+    display: inline-block;
+    color: red;
+    animation: rotacionar 2s linear infinite;
+}
+
+div {
+    margin: 10px 0px;
+}
+
+div#res {
+    padding: 10px;
+    background-color: lightgray;
+    border-radius: 5px;
+}
