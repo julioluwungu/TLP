@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soma sem Operador +</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Soma sem Operador +</h1>
+    
+    <div class="instruction" id="instruction">Digite o primeiro número:</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite um número">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let num1
+        let etapa = 0
+        
+        function somarSemSoma(a, b) {
+            while (b !== 0) {
+                let carry = a & b
+                a = a ^ b
+                b = carry << 1 
+            }
+            return a
+        }
+
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                num1 = Number(valorInput.value)
+
+                if (isNaN(num1)) {
+                    resultado.innerHTML = '<span style="color: red;">Por favor, digite um número válido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+
+                etapa = 1
+                instruction.textContent = 'Digite o segundo número:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                const num2 = Number(valorInput.value)
+
+                if (isNaN(num2)) {
+                    resultado.innerHTML = '<span style="color: red;">Por favor, digite um número válido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+
+                let soma = somarSemSoma(num1, num2)
+                let tipo = soma % 2 === 0 ? 'par' : 'ímpar'
+
+                resultado.innerHTML = `
+                    <div style="color: blue; font-weight: bold;">A soma de ${num1} e ${num2} é: ${soma}</div>
+                    <div style="color: blue; font-weight: bold;">A soma é ${tipo}.</div>
+                `
+                
+                document.querySelector('#proximo-btn').textContent = 'Calcular Novamente'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    etapa = 0
+                    instruction.textContent = 'Digite o primeiro número:'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                    this.textContent = 'Próximo'
+                }, { once: true })
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

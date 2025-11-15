@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas de Salários</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estatísticas de Salários</h1>
+    
+    <div class="instruction" id="instruction">Digite o nome do funcionário (ou 'fim' para encerrar):</div>
+    
+    <input type="text" id="valor-input" placeholder="Digite o nome">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let funcionarios = []
+        let etapa = 0
+        let nomeAtual
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                const nome = valorInput.value.trim()
+                
+                if (nome.toLowerCase() === 'fim') {
+                    if (funcionarios.length === 0) {
+                        resultado.innerHTML = '<span style="color: red;">Nenhum funcionário foi registrado.</span>'
+                        return
+                    }
+                    
+                    let totalSalarios = funcionarios.reduce((ac, funcionario) => ac + funcionario.salario, 0)
+                    let salarioMaisAlto = Math.max(...funcionarios.map(funcionario => funcionario.salario))
+                    let salarioMaisBaixo = Math.min(...funcionarios.map(funcionario => funcionario.salario))
+                    let mediaSalarios = totalSalarios / funcionarios.length
+
+                    resultado.innerHTML = `
+                        <div style="color: blue; font-weight: bold;">Média de salários: ${mediaSalarios.toFixed(1)}</div>
+                        <div style="color: green; font-weight: bold;">Salário mais alto: ${salarioMaisAlto.toFixed(1)}</div>
+                        <div style="color: red; font-weight: bold;">Salário mais baixo: ${salarioMaisBaixo.toFixed(1)}</div>
+                    `
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Cadastrar Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        funcionarios = []
+                        etapa = 0
+                        instruction.textContent = 'Digite o nome do funcionário (ou "fim" para encerrar):'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                    return
+                }
+                
+                if (!nome) {
+                    resultado.innerHTML = '<span style="color: red;">Por favor, digite um nome!</span>'
+                    valorInput.focus()
+                    return
+                }
+                
+                nomeAtual = nome
+                etapa = 1
+                instruction.textContent = `Digite o salário de ${nome}:`
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                const salario = parseFloat(valorInput.value)
+                
+                if (isNaN(salario) || salario <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Salário inválido! Por favor, insira um número.</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                funcionarios.push({ nome: nomeAtual, salario })
+                etapa = 0
+                instruction.textContent = 'Digite o nome do funcionário (ou "fim" para encerrar):'
+                resultado.innerHTML = `<span style="color: green;">${nomeAtual} cadastrado! Total: ${funcionarios.length}</span>`
+                valorInput.value = ''
+                valorInput.focus()
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

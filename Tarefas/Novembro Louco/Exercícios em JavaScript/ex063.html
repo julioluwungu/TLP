@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadrados e Cubos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quadrados e Cubos</h1>
+    
+    <div class="instruction">Clique no botão para ver os quadrados e cubos dos números de 0 a 10:</div>
+    
+    <button id="mostrar-btn">Mostrar Resultados</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#mostrar-btn').addEventListener('click', function() {
+            let resultados = []
+            
+            for (let num = 0; num <= 10; num++) {
+                resultados.push(`${num} === ${num ** 2} === ${num ** 3}`)
+            }
+
+            const resultado = document.querySelector('#resultado')
+            resultado.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 10px;">Imprimindo os quadrados e cubos nos números entre 0 e 10:</div>
+                <div>${resultados.join('<br>')}</div>
+            `
+        })
+    </script>
+</body>
+</html>

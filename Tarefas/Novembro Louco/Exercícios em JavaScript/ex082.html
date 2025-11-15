@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Números</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Números</h1>
+    <input type="number" id="numero" placeholder="Digite um número" required>
+    
+    <select id="opcao">
+        <option value="">Selecione uma opção</option>
+        <option value="fatorial">Calcular Fatorial</option>
+        <option value="parImpar">Verificar Par ou Ímpar</option>
+        <option value="primo">Verificar se é Primo</option>
+    </select>
+    
+    <button onclick="calcular()">Calcular</button>
+    
+    <p id="resultado"></p>
+
+    <script>
+        function fatorial(n) {
+            if (n === 0 || n === 1) return 1
+            return n * fatorial(n - 1)
+        }
+
+        function verificarParImpar(n) {
+            return n % 2 === 0 ? 'Par' : 'Ímpar'
+        }
+
+        function verificarPrimo(n) {
+            if (n <= 1) return false;
+            for (let i = 2; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) return false
+            }
+            return true;
+        }
+
+        function calcular() {
+            let numero = parseInt(document.querySelector("#numero").value)
+            let opcao = document.querySelector("#opcao").value
+            let resultado = '';
+
+            if (!numero && numero !== 0) {
+                resultado = 'Por favor, digite um número válido.'
+            } else {
+                switch (opcao) {
+                    case 'fatorial':
+                        resultado = `Fatorial de ${numero} é ${fatorial(numero)}.`
+                        break
+                    case 'parImpar':
+                        resultado = `${numero} é ${verificarParImpar(numero)}.`
+                        break
+                    case 'primo':
+                        resultado = `${numero} é ${verificarPrimo(numero) ? 'primo' : 'não primo'}.`
+                        break
+                    default:
+                        resultado = 'Por favor, selecione uma opção.'
+                }
+            }
+            document.querySelector("#resultado").innerText = resultado
+        }
+    </script>
+</body>
+</html>

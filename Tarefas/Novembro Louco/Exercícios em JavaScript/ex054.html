@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crescimento de Chico e Zé</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Crescimento de Chico e Zé</h1>
+    
+    <div class="instruction">Clique no botão para calcular quando Zé será maior que Chico:</div>
+    
+    <button id="calcular-btn">Calcular</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#calcular-btn').addEventListener('click', function() {
+            let alturaChico = 1.50
+            let alturaZe = 1.10
+            let crescimentoChico = 0.02
+            let crescimentoZe = 0.03
+            let anos = 0
+
+            while (alturaZe <= alturaChico) {
+                alturaChico += crescimentoChico
+                alturaZe += crescimentoZe
+                anos++
+            }
+
+            const resultado = document.querySelector('#resultado')
+            resultado.innerHTML = `<span style="color: blue; font-weight: bold;">Serão necessários ${anos} anos para que Zé seja maior que Chico.</span>`
+        })
+    </script>
+</body>
+</html>

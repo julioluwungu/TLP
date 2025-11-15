@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Nomes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contador de Nomes</h1>
+    <input type="text" id="nome" placeholder="Digite um nome">
+    <button onclick="adicionarNome()">Adicionar Nome</button>
+    
+    <h2>Lista de Nomes</h2>
+    <ul id="listaNomes"></ul>
+    
+    <h2>Resultados:</h2>
+    <p id="resultado"></p>
+
+    <script>
+        let nomesContagem = {}
+
+        function adicionarNome() {
+            let input = document.querySelector('input#nome')
+            let nome = input.value.trim().toLowerCase()
+
+            if (!nome) {
+                alert("Por favor, digite um nome válido.")
+                return
+            }
+
+            if (nomesContagem[nome]) {
+                nomesContagem[nome]++
+            } else {
+                nomesContagem[nome] = 1
+            }
+
+            atualizarLista()
+            exibirResultados()
+            input.value = ""
+        }
+
+        function atualizarLista() {
+            let lista = document.querySelector("#listaNomes")
+            lista.innerHTML = ""
+
+            for (let nome in nomesContagem) {
+                let li = document.createElement("li")
+                li.textContent = `${nome} - ${nomesContagem[nome]} vezes`
+                lista.appendChild(li)
+            }
+        }
+
+        function exibirResultados() {
+            let maxNome = null
+            let minNome = null
+            let maxContagem = 0
+            let minContagem = Infinity
+
+            for (let nome in nomesContagem) {
+                let contagem = nomesContagem[nome]
+
+                if (contagem > maxContagem) {
+                    maxContagem = contagem
+                    maxNome = nome
+                }
+                if (contagem < minContagem) {
+                    minContagem = contagem
+                    minNome = nome
+                }
+            }
+
+            let resultado = document.querySelector("#resultado")
+            resultado.innerHTML = `
+                Nome mais inserido: ${maxNome} (Quantidade: ${maxContagem})<br>
+                Nome menos inserido: ${minNome} (Quantidade: ${minContagem})
+            `
+        }
+    </script>
+</body>
+</html>

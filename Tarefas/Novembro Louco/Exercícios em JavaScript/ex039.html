@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decaimento Radioativo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Decaimento Radioativo</h1>
+    
+    <div class="instruction">Informe a massa inicial em gramas:</div>
+    
+    <input type="number" id="massa-input" placeholder="Digite a massa em gramas" step="any" min="0.0001">
+    
+    <button id="calcular-btn">Calcular Tempo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#calcular-btn').addEventListener('click', function() {
+            const massaInput = document.querySelector('#massa-input')
+            const resultado = document.querySelector('#resultado')
+            const massa = parseFloat(massaInput.value)
+
+            if (isNaN(massa) || massa <= 0) {
+                resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um valor válido maior que zero.</span>'
+                massaInput.value = ''
+                massaInput.focus()
+                return
+            }
+
+            let tempoTotal = 0
+            let tempoMeio = 50
+            let massaAtual = massa
+
+            while (massaAtual >= 0.05) {
+                massaAtual /= 2
+                tempoTotal += tempoMeio
+            }
+
+            resultado.innerHTML = `<span style="color: blue; font-weight: bold;">O tempo necessário para que a massa seja menor que 0,05 gramas é: ${tempoTotal} segundos</span>`
+
+            massaInput.value = ''
+            massaInput.focus()
+        })
+
+        document.querySelector('#massa-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#calcular-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

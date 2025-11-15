@@ -1,0 +1,11 @@
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\bin\Debug\WindowsFormsApp12.exe.config
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\bin\Debug\WindowsFormsApp12.exe
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\bin\Debug\WindowsFormsApp12.pdb
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\obj\Debug\WindowsFormsApp12.csproj.AssemblyReference.cache
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\obj\Debug\WindowsFormsApp12.Form1.resources
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\obj\Debug\WindowsFormsApp12.Properties.Resources.resources
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\obj\Debug\WindowsFormsApp12.csproj.GenerateResource.cache
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\obj\Debug\WindowsFormsApp12.csproj.CoreCompileInputs.cache
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\obj\Debug\WindowsFormsApp12.exe
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\obj\Debug\WindowsFormsApp12.pdb
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp12\obj\Debug\WindowsFormsApp12.exe.config

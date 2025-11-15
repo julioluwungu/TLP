@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenador de Nomes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ordenador de Nomes</h1>
+    
+    <div class="instruction">Digite uma lista de nomes separados por vírgula:</div>
+    
+    <input type="text" id="nomes-input" placeholder="Ex: João, Maria, Pedro, Ana">
+    
+    <button id="ordenar-btn">Ordenar Nomes</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#ordenar-btn').addEventListener('click', function() {
+            const nomesInput = document.querySelector('#nomes-input')
+            const resultado = document.querySelector('#resultado')
+            const nomesInputValue = nomesInput.value.trim()
+
+            if (!nomesInputValue) {
+                resultado.innerHTML = '<span style="color: red;">Por favor, digite uma lista de nomes!</span>'
+                nomesInput.focus()
+                return
+            }
+
+            let listaNomes = nomesInputValue.split(',').map(nome => nome.trim())
+            listaNomes.sort()
+
+            resultado.innerHTML = `<span style="color: blue; font-weight: bold;">Lista de nomes em ordem alfabética: ${listaNomes.join(', ')}</span>`
+
+            nomesInput.value = ''
+            nomesInput.focus()
+        })
+
+        document.querySelector('#nomes-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#ordenar-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem Regressiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contagem Regressiva</h1>
+    
+    <div class="instruction">Digite um número positivo:</div>
+    
+    <input type="number" id="numero-input" placeholder="Digite um número positivo" min="1">
+    
+    <button id="contar-btn">Iniciar Contagem</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#contar-btn').addEventListener('click', function() {
+            const numeroInput = document.querySelector('#numero-input')
+            const resultado = document.querySelector('#resultado')
+            const numero = Number(numeroInput.value)
+
+            if (isNaN(numero) || numero <= 0) {
+                resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número válido.</span>'
+                numeroInput.value = ''
+                numeroInput.focus()
+                return
+            }
+
+            let contagem = []
+            for (let c = numero; c >= 0; c -= 2) {
+                contagem.push(c)
+            }
+
+            resultado.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 10px;">Contagem regressiva pulando de 2 em 2 começando de ${numero}:</div>
+                <div>${contagem.join(', ')}</div>
+            `
+
+            numeroInput.value = ''
+            numeroInput.focus()
+        })
+
+        document.querySelector('#numero-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#contar-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Caracteres e Palavras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contador de Caracteres e Palavras</h1>
+    
+    <div class="instruction">Digite um texto:</div>
+    
+    <input type="text" id="texto-input" placeholder="Digite um texto">
+    
+    <button id="contar-btn">Contar</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#contar-btn').addEventListener('click', function() {
+            const textoInput = document.querySelector('#texto-input')
+            const resultado = document.querySelector('#resultado')
+            const texto = textoInput.value.trim()
+
+            if (!texto) {
+                resultado.innerHTML = '<span style="color: red;">Por favor, digite um texto!</span>'
+                textoInput.focus()
+                return
+            }
+
+            let numeroCaracteres = texto.replace(/\s+/g, '').length
+            let numeroPalavras = texto.trim().split(/\s+/).length
+
+            resultado.innerHTML = `
+                <div style="color: blue; font-weight: bold;">Número total de caracteres (sem espaços): ${numeroCaracteres}</div>
+                <div style="color: blue; font-weight: bold;">Número total de palavras: ${numeroPalavras}</div>
+            `
+
+            textoInput.value = ''
+            textoInput.focus()
+        })
+
+        document.querySelector('#texto-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#contar-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

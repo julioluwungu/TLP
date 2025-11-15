@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triângulo de Hashtags</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .triangulo {
+            font-family: monospace;
+            white-space: pre;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Triângulo de Hashtags</h1>
+    
+    <div class="instruction">Digite a base do triângulo (entre 5 e 15):</div>
+    
+    <input type="number" id="base-input" placeholder="Digite um número entre 5 e 15" min="5" max="15">
+    
+    <button id="desenhar-btn">Desenhar Triângulo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#desenhar-btn').addEventListener('click', function() {
+            const baseInput = document.querySelector('#base-input')
+            const resultado = document.querySelector('#resultado')
+            const base = Number(baseInput.value)
+
+            if (isNaN(base) || base < 5 || base > 15) {
+                resultado.innerHTML = '<span style="color: red;">A base deve ser entre 5 e 15. Tente novamente.</span>'
+                baseInput.value = ''
+                baseInput.focus()
+                return
+            }
+
+            let trianguloHTML = ''
+
+            for (let c = 1; c <= base; c += 2) {
+                let espaco = Math.floor((base - c) / 2)
+                trianguloHTML += '<div class="triangulo">' + ' '.repeat(espaco) + '#'.repeat(c) + '</div>'
+            }
+
+            resultado.innerHTML = trianguloHTML
+
+            baseInput.value = ''
+            baseInput.focus()
+        })
+
+        document.querySelector('#base-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#desenhar-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

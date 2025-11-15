@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conjugador de Verbos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conjugador de Verbos</h1>
+    
+    <div class="instruction">Digite um verbo regular terminado em ER:</div>
+    
+    <input type="text" id="verbo-input" placeholder="Ex: comer, beber, correr">
+    
+    <button id="conjugar-btn">Conjugar</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#conjugar-btn').addEventListener('click', function() {
+            const verboInput = document.querySelector('#verbo-input')
+            const resultado = document.querySelector('#resultado')
+            let verbo = verboInput.value.trim()
+
+            if (!verbo) {
+                resultado.innerHTML = '<span style="color: red;">Por favor, digite um verbo!</span>'
+                verboInput.focus()
+                return
+            }
+
+            verbo = verbo.toUpperCase()
+
+            if (!verbo.endsWith('ER')) {
+                resultado.innerHTML = '<span style="color: red;">Por favor, insira um verbo regular que termine em "ER".</span>'
+                verboInput.value = ''
+                verboInput.focus()
+                return
+            }
+
+            let radical = (verbo.slice(0, -2)).toLowerCase()
+
+            resultado.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 10px;">Conjugação do verbo "${verbo}" no presente:</div>
+                <div>Eu ${radical}o</div>
+                <div>Tu ${radical}es</div>
+                <div>Ele ${radical}e</div>
+                <div>Ela ${radical}e</div>
+                <div>Nós ${radical}emos</div>
+                <div>Vós ${radical}eis</div>
+                <div>Eles ${radical}em</div>
+                <div>Elas ${radical}em</div>
+            `
+
+            verboInput.value = ''
+            verboInput.focus()
+        })
+
+        document.querySelector('#verbo-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#conjugar-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

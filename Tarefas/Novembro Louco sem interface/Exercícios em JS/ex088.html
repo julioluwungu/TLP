@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrada Sem Vogais</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 250px;
+        }
+        .feedback {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Digite uma Frase (Sem Vogais)</h1>
+    <input type="text" id="frase" placeholder="Digite aqui" oninput="validarInput(this)">
+    <p class="feedback" id="mensagem"></p>
+
+    <script>
+        function validarInput(input) {
+            let vogais = /[aeiouáéíóúãâêîôû]/i
+            let mensagem = document.querySelector("#mensagem")
+            
+            if (vogais.test(input.value)) {
+                mensagem.textContent = "Vogais não são permitidas!"
+                input.value = input.value.replace(vogais, '')
+            } else {
+                mensagem.textContent = ""
+            }
+        }
+    </script>
+</body>
+</html>

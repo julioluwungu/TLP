@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequência de Fibonacci</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sequência de Fibonacci</h1>
+    
+    <div class="instruction">Clique no botão para gerar os 20 primeiros termos:</div>
+    
+    <button id="gerar-btn">Gerar Sequência</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#gerar-btn').addEventListener('click', function() {
+            let fibonacci = [0, 1]
+
+            for (let c = 2; c < 20; c++) {
+                let proximoTermo = fibonacci[c - 1] + fibonacci[c - 2]
+                fibonacci.push(proximoTermo)
+            }
+
+            const resultado = document.querySelector('#resultado')
+            resultado.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 10px;">Os 20 primeiros termos da sequência de Fibonacci são:</div>
+                <div>${fibonacci.join(', ')}</div>
+            `
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Fatorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Fatorial</h1>
+    
+    <div class="instruction" id="instruction">Digite quantos valores devem ser lidos:</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite a quantidade" min="1">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        function calcularFatorial(numero) {
+            if (numero <= 1) return 1
+            return numero * calcularFatorial(numero - 1)
+        }
+
+        let numN
+        let listaFatorial = []
+        let listaValores = []
+        let etapa = 0
+        let contador = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                numN = parseInt(valorInput.value)
+
+                if (isNaN(numN) || numN <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número inteiro válido.</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+
+                etapa = 1
+                instruction.textContent = 'Digite o 1º valor:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                const valor = parseInt(valorInput.value)
+
+                if (isNaN(valor) || valor <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número inteiro válido.</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+
+                listaValores.push(valor)
+                listaFatorial.push(calcularFatorial(valor))
+                contador++
+
+                if (contador < numN) {
+                    instruction.textContent = `Digite o ${contador + 1}º valor:`
+                    resultado.innerHTML = `<span style="color: green;">Valor ${contador} adicionado!</span>`
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else {
+                    let tabelaHTML = `
+                        <table>
+                            <tr>
+                                <th>Valor</th>
+                                <th>Fatorial</th>
+                            </tr>
+                    `
+                    
+                    for (let i = 0; i < listaFatorial.length; i++) {
+                        tabelaHTML += `
+                            <tr>
+                                <td>${listaValores[i]}</td>
+                                <td>${listaFatorial[i]}</td>
+                            </tr>
+                        `
+                    }
+                    
+                    tabelaHTML += '</table>'
+                    
+                    resultado.innerHTML = tabelaHTML
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Calcular Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        numN = 0
+                        listaFatorial = []
+                        listaValores = []
+                        etapa = 0
+                        contador = 0
+                        instruction.textContent = 'Digite quantos valores devem ser lidos:'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                }
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Tabuada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerador de Tabuada</h1>
+    
+    <div class="instruction" id="instruction">Montar a tabuada de:</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite um número">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let numero
+        let inicio
+        let etapa = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            const valor = parseInt(valorInput.value)
+            
+            if (isNaN(valor)) {
+                resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número válido!</span>'
+                valorInput.value = ''
+                valorInput.focus()
+                return
+            }
+            
+            if (etapa === 0) {
+                numero = valor
+                etapa = 1
+                instruction.textContent = 'Começar por:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+            } else if (etapa === 1) {
+                inicio = valor
+                etapa = 2
+                instruction.textContent = 'Terminar em:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+            } else {
+                let fim = valor
+                
+                if (fim < inicio) {
+                    resultado.innerHTML = '<span style="color: red;">O valor final não pode ser menor que o valor inicial. Tente novamente.</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                let tabuadaHTML = `<div style="font-weight: bold; margin-bottom: 10px;">Tabuada de ${numero} começando em ${inicio} e terminando em ${fim}:</div>`
+                
+                for (let i = inicio; i <= fim; i++) {
+                    tabuadaHTML += `<div>${numero} X ${i} = ${numero * i}</div>`
+                }
+                
+                resultado.innerHTML = tabuadaHTML
+                
+                document.querySelector('#proximo-btn').textContent = 'Gerar Novamente'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    numero = null
+                    inicio = null
+                    etapa = 0
+                    instruction.textContent = 'Montar a tabuada de:'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                    this.textContent = 'Próximo'
+                }, { once: true })
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas do Restaurante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estatísticas do Restaurante</h1>
+    
+    <div class="instruction" id="instruction">Digite o número de alunos:</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite o número de alunos" min="1">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let alunos = []
+        let numAlunos
+        let etapa = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                numAlunos = parseInt(valorInput.value)
+                
+                if (isNaN(numAlunos) || numAlunos <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Entrada inválida! Por favor, digite um número válido de alunos.</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 1
+                instruction.textContent = 'Digite o número de vezes que o aluno 1 utilizou o restaurante:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                const uso = parseInt(valorInput.value)
+                
+                if (isNaN(uso) || uso < 0) {
+                    resultado.innerHTML = '<span style="color: red;">Número inválido! Por favor, digite um valor válido.</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                alunos.push(uso)
+                
+                if (alunos.length < numAlunos) {
+                    instruction.textContent = `Digite o número de vezes que o aluno ${alunos.length + 1} utilizou o restaurante:`
+                    resultado.innerHTML = `<span style="color: green;">Aluno ${alunos.length} cadastrado!</span>`
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else {
+                    let menosQue10 = (alunos.filter(aluno => aluno < 10)).length
+                    let entre10e15 = (alunos.filter(aluno => aluno >= 10 && aluno <= 15)).length
+                    let acimaDe15 = (alunos.filter(aluno => aluno > 15)).length
+
+                    let totalAlunos = alunos.length
+                    let percentualMenosQue10 = ((menosQue10 * 100) / totalAlunos).toFixed(1)
+                    let percentualEntre10e15 = ((entre10e15 * 100) / totalAlunos).toFixed(1)
+                    let percentualAcimaDe15 = ((acimaDe15 * 100) / totalAlunos).toFixed(1)
+
+                    resultado.innerHTML = `
+                        <div style="color: blue; font-weight: bold;">a) Percentual de alunos que utilizaram menos que 10 vezes: ${percentualMenosQue10}%</div>
+                        <div style="color: blue; font-weight: bold;">b) Percentual de alunos que utilizaram entre 10 e 15 vezes: ${percentualEntre10e15}%</div>
+                        <div style="color: blue; font-weight: bold;">c) Percentual de alunos que utilizaram mais de 15 vezes: ${percentualAcimaDe15}%</div>
+                    `
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Calcular Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        alunos = []
+                        etapa = 0
+                        instruction.textContent = 'Digite o número de alunos:'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                }
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

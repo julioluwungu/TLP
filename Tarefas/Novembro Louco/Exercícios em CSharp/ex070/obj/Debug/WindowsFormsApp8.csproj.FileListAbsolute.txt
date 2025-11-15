@@ -1,0 +1,10 @@
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\bin\Debug\WindowsFormsApp8.exe.config
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\bin\Debug\WindowsFormsApp8.exe
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\bin\Debug\WindowsFormsApp8.pdb
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\obj\Debug\WindowsFormsApp8.csproj.AssemblyReference.cache
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\obj\Debug\WindowsFormsApp8.Form1.resources
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\obj\Debug\WindowsFormsApp8.Properties.Resources.resources
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\obj\Debug\WindowsFormsApp8.csproj.GenerateResource.cache
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\obj\Debug\WindowsFormsApp8.csproj.CoreCompileInputs.cache
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\obj\Debug\WindowsFormsApp8.exe
+C:\Users\Júlio Luwungu\Documents\Projetos\Windows Form\WindowsFormsApp8\obj\Debug\WindowsFormsApp8.pdb

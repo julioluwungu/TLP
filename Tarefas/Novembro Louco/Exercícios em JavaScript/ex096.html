@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mudar Cor do Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 250px;
+        }
+        .saida {
+            margin-top: 20px;
+            width: 250px;
+            min-height: 50px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Insira Texto com Comentários</h1>
+    <input type="text" id="texto" placeholder="Digite o texto aqui">
+    <button onclick="atualizarTexto()">Mostrar Texto</button>
+    
+    <div class="saida" id="resultado"></div>
+
+    <script>
+        function atualizarTexto() {
+            let input = document.querySelector("#texto").value
+            let resultado = document.querySelector("#resultado")
+
+            let regex = /\/\*(.*?)\*\//g
+            let partes = input.split(regex)
+
+            resultado.innerHTML = partes.map((parte, index) => {
+                if (index % 2 === 1) {
+                    return `<span style="color: red;">${parte}</span>`
+                }
+                return parte
+            }).join('')
+        }
+    </script>
+</body>
+</html>

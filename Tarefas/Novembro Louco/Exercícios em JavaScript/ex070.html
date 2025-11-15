@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data por Extenso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data por Extenso</h1>
+    
+    <div class="instruction">Digite sua data de nascimento (dd/mm/aaaa):</div>
+    
+    <input type="text" id="data-input" placeholder="Ex: 15/05/1990">
+    
+    <button id="converter-btn">Converter</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#converter-btn').addEventListener('click', function() {
+            const dataInput = document.querySelector('#data-input')
+            const resultado = document.querySelector('#resultado')
+            const data = dataInput.value.trim()
+
+            if (!data) {
+                resultado.innerHTML = '<span style="color: red;">Por favor, digite uma data!</span>'
+                dataInput.focus()
+                return
+            }
+
+            let partes = data.split('/')
+            
+            if (partes.length !== 3) {
+                resultado.innerHTML = '<span style="color: red;">Formato inválido. Use dd/mm/aaaa</span>'
+                dataInput.value = ''
+                dataInput.focus()
+                return
+            }
+
+            let [dia, mes, ano] = partes
+
+            let meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+
+            let mesExtenso = meses[parseInt(mes) - 1]
+
+            if (mesExtenso) {
+                resultado.innerHTML = `<span style="color: blue; font-weight: bold;">Você nasceu em ${dia} de ${mesExtenso} de ${ano}</span>`
+            } else {
+                resultado.innerHTML = '<span style="color: red;">Mês inválido. Certifique-se de digitar no formato dd/mm/aaaa.</span>'
+            }
+
+            dataInput.value = ''
+            dataInput.focus()
+        })
+
+        document.querySelector('#data-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#converter-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

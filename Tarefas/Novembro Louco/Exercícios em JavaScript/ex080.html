@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenhos Geométricos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button, select {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .desenho {
+            font-family: monospace;
+            white-space: pre;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Desenhos Geométricos</h1>
+    
+    <div class="instruction" id="instruction">Escolha a figura:</div>
+    
+    <select id="figura-input">
+        <option value="">Selecione uma figura</option>
+        <option value="1">Triângulo</option>
+        <option value="2">Losango</option>
+    </select>
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let figura
+        let etapa = 0
+        
+        function desenharTriangulo(tamanho) {
+            let desenho = ''
+            for (let c = 1; c <= tamanho; c++) {
+                desenho += ' '.repeat(tamanho - c) + '%'.repeat(2 * c -1) + '\n'
+            }
+            return desenho
+        }
+
+        function desenharLosango(tamanho) {
+            let desenho = ''
+            for (let c = 1; c <= tamanho; c++) {
+                desenho += ' '.repeat(tamanho - c) + '%'.repeat(2 * c - 1) + '\n'
+            }
+
+            for (let c = tamanho - 1; c >= 1; c--) {
+                desenho += ' '.repeat(tamanho - c) + '%'.repeat(2 * c - 1) + '\n'
+            }
+            return desenho
+        }
+
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const figuraInput = document.querySelector('#figura-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                figura = figuraInput.value
+                
+                if (!figura) {
+                    resultado.innerHTML = '<span style="color: red;">Selecione uma figura!</span>'
+                    return
+                }
+                
+                etapa = 1
+                figuraInput.style.display = 'none'
+                instruction.textContent = 'Digite o tamanho (número de linhas):'
+                
+                const input = document.createElement('input')
+                input.type = 'number'
+                input.id = 'tamanho-input'
+                input.min = '1'
+                input.placeholder = 'Digite o tamanho'
+                document.body.insertBefore(input, document.querySelector('#proximo-btn'))
+                
+                resultado.innerHTML = ''
+                
+            } else if (etapa === 1) {
+                const tamanhoInput = document.querySelector('#tamanho-input')
+                const tamanho = parseInt(tamanhoInput.value)
+
+                if (isNaN(tamanho) || tamanho <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Tamanho inválido!</span>'
+                    tamanhoInput.value = ''
+                    tamanhoInput.focus()
+                    return
+                }
+
+                let desenhoHTML = ''
+                
+                if (figura === '1') {
+                    desenhoHTML = desenharTriangulo(tamanho)
+                } else if (figura === '2') {
+                    desenhoHTML = desenharLosango(tamanho)
+                }
+
+                resultado.innerHTML = `<div class="desenho">${desenhoHTML}</div>`
+                
+                document.querySelector('#proximo-btn').textContent = 'Desenhar Novamente'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    location.reload()
+                }, { once: true })
+            }
+        })
+
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soma de Positivos e Contagem de Negativos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Soma de Positivos e Contagem de Negativos</h1>
+    
+    <div class="instruction" id="instruction">Digite o 1º valor:</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite um número">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let valores = []
+        let valorAtual = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            const num = parseInt(valorInput.value)
+            
+            if (isNaN(num)) {
+                resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número válido!</span>'
+                valorInput.value = ''
+                valorInput.focus()
+                return
+            }
+            
+            valores.push(num)
+            valorAtual++
+            
+            if (valorAtual < 50) {
+                instruction.textContent = `Digite o ${valorAtual + 1}º valor:`
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+            } else {
+                let positivos = valores.filter(num => num > 0)
+                let negativos = valores.filter(num => num < 0)
+                let soma = positivos.reduce((ac, valor) => ac + valor, 0)
+                
+                resultado.innerHTML = `
+                    <div style="color: green; font-weight: bold;">A soma dos valores positivos digitados é de: ${soma}</div>
+                    <div style="color: blue; font-weight: bold;">A quantidade dos valores negativos digitados é de: ${negativos.length}</div>
+                `
+                
+                document.querySelector('#proximo-btn').textContent = 'Calcular Novamente'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    valores = []
+                    valorAtual = 0
+                    instruction.textContent = 'Digite o 1º valor:'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                    this.textContent = 'Próximo'
+                }, { once: true })
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crescimento Populacional</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Crescimento Populacional</h1>
+    
+    <div class="instruction">Clique no botão para calcular quando a população A ultrapassará a população B:</div>
+    
+    <button id="calcular-btn">Calcular</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#calcular-btn').addEventListener('click', function() {
+            let populacaoA = 80000
+            let taxaCrescimentoA = 0.03
+
+            let populacaoB = 200000
+            let taxaCrescimentoB = 0.015
+
+            let anos = 0
+
+            while (populacaoA < populacaoB) {
+                populacaoA += (populacaoA * taxaCrescimentoA)
+                populacaoB += (populacaoB * taxaCrescimentoB)
+                anos++
+            }
+
+            const resultado = document.querySelector('#resultado')
+            resultado.innerHTML = `<span style="color: blue; font-weight: bold;">Anos necessários para a população A ultrapassar a população B: ${anos}</span>`
+        })
+    </script>
+</body>
+</html>

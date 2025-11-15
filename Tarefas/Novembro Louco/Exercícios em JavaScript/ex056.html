@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas do Grupo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button, select {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estatísticas do Grupo</h1>
+    
+    <div class="instruction" id="instruction">Informe a idade (negativa para encerrar):</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite a idade">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let totalSalario = 0
+        let quantidade = 0
+        let maiorIdade = -1
+        let menorIdade = 1000000
+        let mulheresComSalarioBaixo = 0
+        let etapa = 0
+        let idadeAtual
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                const idade = parseInt(valorInput.value)
+                
+                if (idade < 0) {
+                    if (quantidade === 0) {
+                        resultado.innerHTML = '<span style="color: red;">Nenhuma pessoa foi cadastrada!</span>'
+                        return
+                    }
+                    
+                    let mediaSalario = quantidade > 0 ? totalSalario / quantidade : 0
+
+                    resultado.innerHTML = `
+                        <div style="color: blue; font-weight: bold;">Média de salário do grupo: R$${mediaSalario.toFixed(2)}</div>
+                        <div style="color: blue; font-weight: bold;">Maior idade do grupo: ${maiorIdade}</div>
+                        <div style="color: blue; font-weight: bold;">Menor idade do grupo: ${menorIdade}</div>
+                        <div style="color: blue; font-weight: bold;">Quantidade de mulheres com salário até R$100,00: ${mulheresComSalarioBaixo}</div>
+                    `
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Cadastrar Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        totalSalario = 0
+                        quantidade = 0
+                        maiorIdade = -1
+                        menorIdade = 1000000
+                        mulheresComSalarioBaixo = 0
+                        etapa = 0
+                        instruction.textContent = 'Informe a idade (negativa para encerrar):'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                    return
+                }
+                
+                if (isNaN(idade) || idade < 0) {
+                    resultado.innerHTML = '<span style="color: red;">Idade inválida!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                idadeAtual = idade
+                etapa = 1
+                instruction.textContent = 'Informe o sexo (M/F):'
+                resultado.innerHTML = ''
+                
+                valorInput.style.display = 'none'
+                const select = document.createElement('select')
+                select.id = 'sexo-select'
+                select.innerHTML = `
+                    <option value="">Selecione o sexo</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                `
+                document.body.insertBefore(select, document.querySelector('#proximo-btn'))
+                
+            } else if (etapa === 1) {
+                const sexoSelect = document.querySelector('#sexo-select')
+                const sexo = sexoSelect.value.toUpperCase()
+                
+                if (!sexo) {
+                    resultado.innerHTML = '<span style="color: red;">Selecione o sexo!</span>'
+                    return
+                }
+                
+                etapa = 2
+                instruction.textContent = 'Informe o salário:'
+                resultado.innerHTML = ''
+                
+                sexoSelect.remove()
+                valorInput.style.display = 'block'
+                valorInput.type = 'number'
+                valorInput.step = '0.01'
+                valorInput.placeholder = 'Digite o salário'
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 2) {
+                const salario = parseFloat(valorInput.value)
+                
+                if (isNaN(salario) || salario < 0) {
+                    resultado.innerHTML = '<span style="color: red;">Salário inválido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                totalSalario += salario
+                quantidade++
+
+                if (idadeAtual > maiorIdade) {
+                    maiorIdade = idadeAtual
+                }
+                if (idadeAtual < menorIdade) {
+                    menorIdade = idadeAtual
+                }
+
+                if (sexo === 'F' && salario <= 100) {
+                    mulheresComSalarioBaixo++
+                }
+                
+                etapa = 0
+                instruction.textContent = 'Informe a idade (negativa para encerrar):'
+                resultado.innerHTML = `<span style="color: green;">Pessoa cadastrada! Total: ${quantidade}</span>`
+                valorInput.value = ''
+                valorInput.focus()
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

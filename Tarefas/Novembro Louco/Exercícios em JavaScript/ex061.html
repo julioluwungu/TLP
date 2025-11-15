@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Elevador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Controle de Elevador</h1>
+    
+    <div class="instruction" id="instruction">Informe o número de andares do prédio:</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite o número de andares" min="1">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let numAndares
+        let totalPessoas = 0
+        let andarAtual = 1
+        let etapa = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                numAndares = parseInt(valorInput.value)
+                
+                if (isNaN(numAndares) || numAndares <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número válido de andares.</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 1
+                instruction.textContent = `Número de pessoas que entraram no elevador no ${andarAtual}º andar:`
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                const entraram = parseInt(valorInput.value)
+                
+                if (isNaN(entraram) || entraram < 0) {
+                    resultado.innerHTML = '<span style="color: red;">Número inválido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 2
+                instruction.textContent = `Número de pessoas que saíram do elevador no ${andarAtual}º andar:`
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 2) {
+                const sairam = parseInt(valorInput.value)
+                
+                if (isNaN(sairam) || sairam < 0) {
+                    resultado.innerHTML = '<span style="color: red;">Número inválido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                totalPessoas += entraram - sairam
+
+                if (totalPessoas > 15) {
+                    let excesso = totalPessoas - 15
+                    resultado.innerHTML = `<span style="color: red;">Excesso de passageiros! Deve sair ${excesso} pessoas.</span>`
+                    totalPessoas -= excesso
+                }
+
+                if (totalPessoas < 0) {
+                    totalPessoas = 0
+                }
+                
+                andarAtual++
+                
+                if (andarAtual <= numAndares) {
+                    etapa = 1
+                    instruction.textContent = `Número de pessoas que entraram no elevador no ${andarAtual}º andar:`
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else {
+                    resultado.innerHTML += `<div style="margin-top: 10px; color: blue; font-weight: bold;">Número de pessoas que irão descer no último andar: ${totalPessoas}</div>`
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Simular Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        numAndares = 0
+                        totalPessoas = 0
+                        andarAtual = 1
+                        etapa = 0
+                        instruction.textContent = 'Informe o número de andares do prédio:'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                }
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

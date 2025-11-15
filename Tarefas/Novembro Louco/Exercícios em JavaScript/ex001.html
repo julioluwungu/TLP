@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Tempo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tempo-original {
+            color: #333;
+            font-weight: bold;
+        }
+        .tempo-convertido {
+            color: #4a6fa5;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversor de Tempo</h1>
+    
+    <div class="instruction">Digite um tempo em segundos:</div>
+    
+    <input type="number" id="tempo-input" placeholder="Ex: 3665" min="0">
+    
+    <button id="converter-btn">Converter</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.getElementById('converter-btn').addEventListener('click', function() {
+            const tempoInput = document.getElementById('tempo-input');
+            const tempo = Number(tempoInput.value);
+            const resultado = document.getElementById('resultado');
+
+            // Validação da entrada
+            if (isNaN(tempo) || tempo < 0) {
+                resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número válido!</span>';
+                tempoInput.value = '';
+                tempoInput.focus();
+                return;
+            }
+
+            // Cálculos de conversão
+            let horas = Math.floor(tempo / 3600);
+            let minutos = Math.floor((tempo - (horas * 3600)) / 60);
+            let segundos = Math.floor((tempo - (horas * 3600)) - (minutos * 60));
+
+            // Formatar para dois dígitos
+            horas = horas.toString().padStart(2, '0');
+            minutos = minutos.toString().padStart(2, '0');
+            segundos = segundos.toString().padStart(2, '0');
+
+            // Exibir resultado
+            resultado.innerHTML = `
+                <div class="tempo-original">${tempo} segundos equivalem a:</div>
+                <div class="tempo-convertido">${horas}:${minutos}:${segundos}</div>
+            `;
+
+            // Limpar input e focar novamente
+            tempoInput.value = '';
+            tempoInput.focus();
+        });
+
+        // Permitir converter pressionando Enter
+        document.getElementById('tempo-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('converter-btn').click();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Múltiplos de 7</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Múltiplos de 7</h1>
+    
+    <div class="instruction">Clique no botão para ver todos os múltiplos inteiros de 7 inferiores à 1000:</div>
+    
+    <button id="mostrar-btn">Mostrar Múltiplos</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#mostrar-btn').addEventListener('click', function() {
+            let multiplos = []
+            
+            for (let num = 1; num < 1000; num++) {
+                if (num % 7 == 0) multiplos.push(num)
+            }
+
+            const resultado = document.querySelector('#resultado')
+            resultado.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 10px;">Imprimindo todos os múltiplos inteiros de 7 inferiores à 1000:</div>
+                <div>${multiplos.join(', ')}</div>
+            `
+        })
+    </script>
+</body>
+</html>

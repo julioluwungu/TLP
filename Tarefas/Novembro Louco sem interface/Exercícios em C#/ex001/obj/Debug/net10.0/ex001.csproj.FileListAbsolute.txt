@@ -1,0 +1,14 @@
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\bin\Debug\net10.0\ex001.exe
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\bin\Debug\net10.0\ex001.deps.json
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\bin\Debug\net10.0\ex001.runtimeconfig.json
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\bin\Debug\net10.0\ex001.dll
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\bin\Debug\net10.0\ex001.pdb
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\obj\Debug\net10.0\ex001.GeneratedMSBuildEditorConfig.editorconfig
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\obj\Debug\net10.0\ex001.AssemblyInfoInputs.cache
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\obj\Debug\net10.0\ex001.AssemblyInfo.cs
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\obj\Debug\net10.0\ex001.csproj.CoreCompileInputs.cache
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\obj\Debug\net10.0\ex001.dll
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\obj\Debug\net10.0\refint\ex001.dll
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\obj\Debug\net10.0\ex001.pdb
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\obj\Debug\net10.0\ex001.genruntimeconfig.cache
+C:\TLP_Exercicios\Exercicios_CSharp\ex001\obj\Debug\net10.0\ref\ex001.dll

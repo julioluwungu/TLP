@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button, select {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora</h1>
+    
+    <div class="instruction" id="instruction">Escolha uma operação:</div>
+    
+    <select id="operacao-input">
+        <option value="">Selecione uma operação</option>
+        <option value="+">Adição (+)</option>
+        <option value="-">Subtração (-)</option>
+        <option value="*">Multiplicação (*)</option>
+        <option value="/">Divisão (/)</option>
+    </select>
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let valores = []
+        let operacao
+        let etapa = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                operacao = document.querySelector('#operacao-input').value
+                
+                if (!operacao) {
+                    resultado.innerHTML = '<span style="color: red;">Operação inválida. Por favor, tente novamente!</span>'
+                    return
+                }
+                
+                etapa = 1
+                instruction.textContent = 'Digite o 1º valor:'
+                document.querySelector('#operacao-input').style.display = 'none'
+                document.querySelector('#operacao-input').remove()
+                
+                const input = document.createElement('input')
+                input.type = 'number'
+                input.id = 'valor-input'
+                input.placeholder = 'Digite um número'
+                input.step = 'any'
+                document.body.insertBefore(input, document.querySelector('#proximo-btn'))
+                
+                resultado.innerHTML = ''
+                
+            } else if (etapa === 1 || etapa === 2) {
+                const valorInput = document.querySelector('#valor-input')
+                const num = parseFloat(valorInput.value)
+                
+                if (isNaN(num)) {
+                    resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número válido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                valores.push(num)
+                etapa++
+                
+                if (etapa === 2) {
+                    instruction.textContent = 'Digite o 2º valor:'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else {
+                    let resultadoCalculo
+                    
+                    switch (operacao) {
+                        case '+': resultadoCalculo = valores[0] + valores[1]; break
+                        case '-': resultadoCalculo = valores[0] - valores[1]; break
+                        case '*': resultadoCalculo = valores[0] * valores[1]; break
+                        case '/': resultadoCalculo = valores[0] / valores[1]; break
+                    }
+                    
+                    resultado.innerHTML = `<span style="color: blue; font-weight: bold;">Resultado: ${resultadoCalculo}</span>`
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Calcular Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        location.reload()
+                    }, { once: true })
+                }
+            }
+        })
+
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

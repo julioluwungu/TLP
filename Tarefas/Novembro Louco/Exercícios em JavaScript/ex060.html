@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Notas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sistema de Notas</h1>
+    
+    <div class="instruction" id="instruction">Informe a matrícula do 1º aluno (9999 para encerrar):</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite a matrícula">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let totalAprovados = 0
+        let totalReprovados = 0
+        let totalAlunos = 0
+        let contador = 1
+        let etapa = 0
+        let matriculaAtual
+        let nota1, nota2, nota3
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                const matricula = parseInt(valorInput.value)
+                
+                if (matricula === 9999) {
+                    if (totalAlunos === 0) {
+                        resultado.innerHTML = '<span style="color: red;">Nenhum aluno foi cadastrado!</span>'
+                        return
+                    }
+                    
+                    resultado.innerHTML = `
+                        <div style="color: blue; font-weight: bold;">Total de alunos: ${totalAlunos}</div>
+                        <div style="color: green; font-weight: bold;">Total de aprovados: ${totalAprovados}</div>
+                        <div style="color: red; font-weight: bold;">Total de reprovados: ${totalReprovados}</div>
+                    `
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Calcular Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        totalAprovados = 0
+                        totalReprovados = 0
+                        totalAlunos = 0
+                        contador = 1
+                        etapa = 0
+                        instruction.textContent = 'Informe a matrícula do 1º aluno (9999 para encerrar):'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                    return
+                }
+                
+                if (isNaN(matricula)) {
+                    resultado.innerHTML = '<span style="color: red;">Matrícula inválida!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                matriculaAtual = matricula
+                etapa = 1
+                instruction.textContent = 'Informe a 1ª nota:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                nota1 = parseFloat(valorInput.value)
+                
+                if (isNaN(nota1) || nota1 < 0) {
+                    resultado.innerHTML = '<span style="color: red;">Nota inválida!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 2
+                instruction.textContent = 'Informe a 2ª nota:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 2) {
+                nota2 = parseFloat(valorInput.value)
+                
+                if (isNaN(nota2) || nota2 < 0) {
+                    resultado.innerHTML = '<span style="color: red;">Nota inválida!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 3
+                instruction.textContent = 'Informe a 3ª nota:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 3) {
+                nota3 = parseFloat(valorInput.value)
+                
+                if (isNaN(nota3) || nota3 < 0) {
+                    resultado.innerHTML = '<span style="color: red;">Nota inválida!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                let mediaFinal = ((2 * nota1) + (3 * nota2) + (4 * nota3)) / 9
+                totalAlunos++
+
+                if (mediaFinal >= 5) {
+                    resultado.innerHTML = `<span style="color: green;">Matrícula: ${matriculaAtual}, Média Final: ${mediaFinal.toFixed(2)} - APROVADO</span>`
+                    totalAprovados++
+                } else {
+                    resultado.innerHTML = `<span style="color: red;">Matrícula: ${matriculaAtual}, Média Final: ${mediaFinal.toFixed(2)} - REPROVADO</span>`
+                    totalReprovados++
+                }
+                
+                contador++
+                etapa = 0
+                instruction.textContent = `Informe a matrícula do ${contador}º aluno (9999 para encerrar):`
+                valorInput.value = ''
+                valorInput.focus()
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

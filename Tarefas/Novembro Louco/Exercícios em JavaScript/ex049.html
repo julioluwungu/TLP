@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparação de Peso e Altura</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Comparação de Peso e Altura</h1>
+    
+    <div class="instruction" id="instruction">Digite o nome da primeira pessoa:</div>
+    
+    <input type="text" id="valor-input" placeholder="Digite o nome">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let nome1, altura1, peso1, nome2, altura2, peso2
+        let etapa = 0
+        let pessoaAtual = 1
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                const nome = valorInput.value.trim()
+                
+                if (!nome) {
+                    resultado.innerHTML = '<span style="color: red;">Por favor, digite um nome!</span>'
+                    valorInput.focus()
+                    return
+                }
+                
+                if (pessoaAtual === 1) {
+                    nome1 = nome
+                    etapa = 1
+                    instruction.textContent = `Digite a altura de ${nome1} (em metros):`
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else {
+                    nome2 = nome
+                    etapa = 1
+                    instruction.textContent = `Digite a altura de ${nome2} (em metros):`
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                }
+                
+            } else if (etapa === 1) {
+                const altura = parseFloat(valorInput.value)
+                
+                if (isNaN(altura) || altura <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Altura inválida!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                if (pessoaAtual === 1) {
+                    altura1 = altura
+                    etapa = 2
+                    instruction.textContent = `Digite o peso de ${nome1} (em kg):`
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else {
+                    altura2 = altura
+                    etapa = 2
+                    instruction.textContent = `Digite o peso de ${nome2} (em kg):`
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                }
+                
+            } else if (etapa === 2) {
+                const peso = parseFloat(valorInput.value)
+                
+                if (isNaN(peso) || peso <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Peso inválido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                if (pessoaAtual === 1) {
+                    peso1 = peso
+                    pessoaAtual = 2
+                    etapa = 0
+                    instruction.textContent = 'Digite o nome da segunda pessoa:'
+                    resultado.innerHTML = '<span style="color: green;">Primeira pessoa cadastrada!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else {
+                    peso2 = peso
+                    
+                    let maisPesado = peso1 >= peso2 ? { nome: nome1, peso: peso1 } : { nome: nome2, peso: peso2 }
+                    let maisAlto = altura1 >= altura2 ? { nome: nome1, altura: altura1 } : { nome: nome2, altura: altura2 }
+
+                    resultado.innerHTML = `
+                        <div style="color: blue; font-weight: bold;">A pessoa mais pesada é ${maisPesado.nome} com ${maisPesado.peso} kg.</div>
+                        <div style="color: blue; font-weight: bold;">A pessoa mais alta é ${maisAlto.nome} com ${maisAlto.altura} m.</div>
+                    `
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Comparar Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        pessoaAtual = 1
+                        etapa = 0
+                        instruction.textContent = 'Digite o nome da primeira pessoa:'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                }
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

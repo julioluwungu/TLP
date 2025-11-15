@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem de Números</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .par {
+            color: green;
+        }
+        .impar {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contagem de Números</h1>
+    <input type="number" id="numero" placeholder="Digite um número" min="0">
+    <button onclick="contar()">Adicionar Número</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let numeros = []
+
+        function contar() {
+            let input = document.querySelector("#numero")
+            let numero = parseInt(input.value)
+
+            if (!isNaN(numero) && numero >= 0) {
+                numeros.push(numero)
+                atualizarResultado()
+            } else {
+                alert("Por favor, insira um número válido.")
+            }
+            
+            input.value = ""
+            input.focus()
+        }
+
+        function atualizarResultado() {
+            let resultado = document.querySelector("#resultado")
+            resultado.innerHTML = ""
+
+            numeros.forEach(num => {
+                let span = document.createElement("span")
+                span.textContent = num
+
+                if (num % 2 === 0) {
+                    span.classList.add("par")
+                } else {
+                    span.classList.add("impar")
+                }
+
+                resultado.appendChild(span)
+            })
+        }
+    </script>
+</body>
+</html>

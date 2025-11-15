@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progressão Aritmética</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Progressão Aritmética</h1>
+    
+    <div class="instruction" id="instruction">Informe o número de termos (n):</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite o número de termos">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let n, a1, r
+        let etapa = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                n = parseInt(valorInput.value)
+                
+                if (isNaN(n) || n <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, tente novamente!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 1
+                instruction.textContent = 'Informe o primeiro termo (a1):'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                a1 = parseFloat(valorInput.value)
+                
+                if (isNaN(a1)) {
+                    resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, tente novamente!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 2
+                instruction.textContent = 'Informe a razão (r):'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 2) {
+                r = parseFloat(valorInput.value)
+                
+                if (isNaN(r)) {
+                    resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, tente novamente!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                let termos = []
+                let soma = 0
+
+                for (let c = 0; c < n; c++) {
+                    let termo = a1 + c * r
+                    termos.push(termo)
+                    soma += termo
+                }
+
+                resultado.innerHTML = `
+                    <div style="font-weight: bold; margin-bottom: 10px;">Os termos da PA são: ${termos.join(", ")}</div>
+                    <div style="color: blue; font-weight: bold;">A soma dos termos é: ${soma}</div>
+                `
+                
+                document.querySelector('#proximo-btn').textContent = 'Calcular Novamente'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    etapa = 0
+                    instruction.textContent = 'Informe o número de termos (n):'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                    this.textContent = 'Próximo'
+                }, { once: true })
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Hotéis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button, select {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Hotéis</h1>
+    
+    <div class="instruction" id="instruction">Digite o nome do hotel:</div>
+    
+    <input type="text" id="valor-input" placeholder="Digite o nome">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let hoteis = []
+        let etapa = 0
+        let hotelAtual = {}
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                const nome = valorInput.value.trim()
+                
+                if (!nome) {
+                    resultado.innerHTML = '<span style="color: red;">Por favor, digite um nome!</span>'
+                    valorInput.focus()
+                    return
+                }
+                
+                hotelAtual.nome = nome
+                etapa = 1
+                instruction.textContent = 'Digite a distância do hotel ao centro da cidade (em km):'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                const distancia = parseFloat(valorInput.value)
+                
+                if (isNaN(distancia) || distancia <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Distância inválida!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                hotelAtual.distancia = distancia
+                etapa = 2
+                instruction.textContent = 'Digite o número médio de visitantes no último feriado:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 2) {
+                const visitantes = parseInt(valorInput.value)
+                
+                if (isNaN(visitantes) || visitantes < 0) {
+                    resultado.innerHTML = '<span style="color: red;">Número de visitantes inválido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                hotelAtual.visitantes = visitantes
+                etapa = 3
+                instruction.textContent = 'Digite o tipo de acesso ao hotel:'
+                resultado.innerHTML = ''
+                
+                valorInput.style.display = 'none'
+                const select = document.createElement('select')
+                select.id = 'acesso-select'
+                select.innerHTML = `
+                    <option value="">Selecione o tipo de acesso</option>
+                    <option value="0">Não asfaltado</option>
+                    <option value="1">Asfaltado</option>
+                `
+                document.body.insertBefore(select, document.querySelector('#proximo-btn'))
+                
+            } else if (etapa === 3) {
+                const acessoSelect = document.querySelector('#acesso-select')
+                const acesso = parseInt(acessoSelect.value)
+                
+                if (isNaN(acesso)) {
+                    resultado.innerHTML = '<span style="color: red;">Selecione um tipo de acesso!</span>'
+                    return
+                }
+                
+                hotelAtual.acesso = acesso
+                hoteis.push({...hotelAtual})
+                
+                etapa = 4
+                instruction.textContent = 'Deseja adicionar mais um hotel?'
+                resultado.innerHTML = `<span style="color: green;">Hotel ${hotelAtual.nome} cadastrado! Total: ${hoteis.length}</span>`
+                
+                acessoSelect.remove()
+                valorInput.style.display = 'block'
+                valorInput.type = 'text'
+                valorInput.placeholder = 'Digite s para sim ou n para não'
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 4) {
+                const resposta = valorInput.value.trim().toLowerCase()
+                
+                if (resposta === 's') {
+                    etapa = 0
+                    hotelAtual = {}
+                    instruction.textContent = 'Digite o nome do hotel:'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else if (resposta === 'n') {
+                    let hoteisDistantes = (hoteis.filter(hotel => hotel.distancia > 15)).length
+                    
+                    let hotelesNaoAsfaltados = hoteis.filter(hotel => hotel.acesso === 0)
+                    let mediaVisitantes = 0
+
+                    if (hotelesNaoAsfaltados.length > 0) {
+                        let somaVisitantes = hotelesNaoAsfaltados.reduce((ac, hotel) => ac + hotel.visitantes, 0)
+                        mediaVisitantes = somaVisitantes / hotelesNaoAsfaltados.length
+                    }
+
+                    let hoteisAsfaltados = hoteis.filter(hotel => hotel.acesso === 1 && hotel.visitantes < 1000)
+                    let hoteisAsfaltadosHTML = ''
+
+                    hoteisAsfaltados.forEach(hotel => {
+                        hoteisAsfaltadosHTML += `<div>${hotel.nome}, Distância: ${hotel.distancia} km</div>`
+                    })
+
+                    resultado.innerHTML = `
+                        <div style="color: blue; font-weight: bold;">Número de hotéis que distam mais de 15 km do centro: ${hoteisDistantes}</div>
+                        <div style="color: blue; font-weight: bold;">Quantidade média de visitantes nos hotéis com acesso não asfaltado: ${mediaVisitantes.toFixed(1)}</div>
+                        <div style="font-weight: bold; margin-top: 10px;">Hotéis asfaltados com menos de 1.000 visitantes:</div>
+                        ${hoteisAsfaltadosHTML || '<div>Nenhum hotel encontrado</div>'}
+                    `
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Cadastrar Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        hoteis = []
+                        etapa = 0
+                        hotelAtual = {}
+                        instruction.textContent = 'Digite o nome do hotel:'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                } else {
+                    resultado.innerHTML = '<span style="color: red;">Digite s para sim ou n para não!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                }
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folha de Pagamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button, select {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Folha de Pagamento</h1>
+    
+    <div class="instruction" id="instruction">Digite o código (ou 999 para sair):</div>
+    
+    <input type="number" id="codigo-input" placeholder="Digite o código">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let listagem = []
+        let salarioM = []
+        let salarioF = []
+        let etapa = 0
+        let codigoAtual
+        let sexoAtual
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const codigoInput = document.querySelector('#codigo-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                const codigo = parseInt(codigoInput.value)
+                
+                if (codigo === 999) {
+                    if (listagem.length === 0) {
+                        resultado.innerHTML = '<span style="color: red;">Nenhum funcionário foi cadastrado!</span>'
+                        codigoInput.value = ''
+                        codigoInput.focus()
+                        return
+                    }
+                    
+                    let somaSalM = salarioM.reduce((ac, valor) => ac + valor, 0)
+                    let somaSalF = salarioF.reduce((ac, valor) => ac + valor, 0)
+
+                    let mediaSalM = salarioM.length > 0 ? somaSalM / salarioM.length : 0
+                    let mediaSalF = salarioF.length > 0 ? somaSalF / salarioF.length : 0
+
+                    let listagemHTML = '<div style="font-weight: bold; margin-bottom: 10px;">Emitindo listagem:</div>'
+                    listagem.forEach(pessoa => {
+                        listagemHTML += `<div>Código: ${pessoa.codigo}. Sexo: ${pessoa.sexo}. Salário bruto: R$ ${pessoa.salario_bruto.toFixed(1)}. Salário líquido: R$ ${pessoa.salario_liquido.toFixed(1)}.</div>`
+                    })
+                    
+                    listagemHTML += `<div style="margin-top: 10px; color: blue;">Média dos salários líquidos do sexo masculino: R$ ${mediaSalM.toFixed(1)}</div>`
+                    listagemHTML += `<div style="color: blue;">Média dos salários líquidos do sexo feminino: R$ ${mediaSalF.toFixed(1)}</div>`
+                    
+                    resultado.innerHTML = listagemHTML
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Cadastrar Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        listagem = []
+                        salarioM = []
+                        salarioF = []
+                        etapa = 0
+                        instruction.textContent = 'Digite o código (ou 999 para sair):'
+                        resultado.innerHTML = ''
+                        codigoInput.value = ''
+                        codigoInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                    return
+                }
+                
+                if (isNaN(codigo)) {
+                    resultado.innerHTML = '<span style="color: red;">Código inválido!</span>'
+                    codigoInput.value = ''
+                    codigoInput.focus()
+                    return
+                }
+                
+                codigoAtual = codigo
+                etapa = 1
+                instruction.textContent = 'Qual o sexo? [M/F]:'
+                resultado.innerHTML = ''
+                codigoInput.value = ''
+                
+                const select = document.createElement('select')
+                select.id = 'sexo-input'
+                select.innerHTML = `
+                    <option value="">Selecione o sexo</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                `
+                document.body.insertBefore(select, document.querySelector('#proximo-btn'))
+                
+            } else if (etapa === 1) {
+                const sexoInput = document.querySelector('#sexo-input')
+                const sexo = sexoInput.value.trim().toUpperCase()
+                
+                if (!['M', 'F'].includes(sexo)) {
+                    resultado.innerHTML = '<span style="color: red;">Sexo inválido. Por favor, tente novamente!</span>'
+                    return
+                }
+                
+                sexoAtual = sexo
+                etapa = 2
+                instruction.textContent = 'Digite o número de horas/aulas dadas:'
+                resultado.innerHTML = ''
+                sexoInput.remove()
+                codigoInput.type = 'number'
+                codigoInput.placeholder = 'Digite as horas/aulas'
+                codigoInput.value = ''
+                codigoInput.focus()
+                
+            } else if (etapa === 2) {
+                const horas = parseInt(codigoInput.value)
+                
+                if (isNaN(horas) || horas <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Horas inválidas!</span>'
+                    codigoInput.value = ''
+                    codigoInput.focus()
+                    return
+                }
+                
+                let salBruto = horas * 30
+                let desconto = sexoAtual === 'M' ? 0.10 : 0.05
+                let salLiquido = salBruto * (1 - desconto)
+
+                if (sexoAtual === 'M') {
+                    salarioM.push(salLiquido)
+                } else {
+                    salarioF.push(salLiquido)
+                }
+
+                listagem.push({ codigo: codigoAtual, sexo: sexoAtual, salario_bruto: salBruto, salario_liquido: salLiquido })
+                
+                resultado.innerHTML = `<span style="color: green;">Funcionário cadastrado! Total: ${listagem.length}</span>`
+                
+                etapa = 0
+                instruction.textContent = 'Digite o código (ou 999 para sair):'
+                codigoInput.type = 'number'
+                codigoInput.placeholder = 'Digite o código'
+                codigoInput.value = ''
+                codigoInput.focus()
+            }
+        })
+
+        document.querySelector('#codigo-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

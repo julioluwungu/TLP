@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeira e Última Letra</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Primeira e Última Letra</h1>
+    
+    <div class="instruction" id="instruction">Digite uma palavra (ou uma palavra que comece com "f" para terminar):</div>
+    
+    <input type="text" id="palavra-input" placeholder="Digite uma palavra">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const palavraInput = document.querySelector('#palavra-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            const palavra = palavraInput.value.trim()
+
+            if (!palavra) {
+                resultado.innerHTML = '<span style="color: red;">Por favor, digite uma palavra!</span>'
+                palavraInput.focus()
+                return
+            }
+
+            let primeiraLetra = palavra.charAt(0)
+            let ultimaLetra = palavra.charAt(palavra.length - 1)
+            
+            const novoResultado = document.createElement('div')
+            novoResultado.innerHTML = `<span style="color: blue; font-weight: bold;">${palavra}: ${primeiraLetra}-${ultimaLetra}</span>`
+            resultado.appendChild(novoResultado)
+
+            if (primeiraLetra.toLowerCase() === 'f') {
+                const mensagemFim = document.createElement('div')
+                mensagemFim.innerHTML = '<div style="color: green; font-weight: bold; margin-top: 10px;">Programa encerrado!</div>'
+                resultado.appendChild(mensagemFim)
+                
+                document.querySelector('#proximo-btn').textContent = 'Reiniciar'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    instruction.textContent = 'Digite uma palavra (ou uma palavra que comece com "f" para terminar):'
+                    resultado.innerHTML = ''
+                    palavraInput.value = ''
+                    palavraInput.focus()
+                    this.textContent = 'Próximo'
+                }, { once: true })
+            } else {
+                palavraInput.value = ''
+                palavraInput.focus()
+            }
+        })
+
+        document.querySelector('#palavra-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

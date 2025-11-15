@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abreviador de Nomes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Abreviador de Nomes</h1>
+    
+    <div class="instruction">Digite o seu nome completo:</div>
+    
+    <input type="text" id="nome-input" placeholder="Ex: João Silva Santos">
+    
+    <button id="abreviar-btn">Abreviar Nome</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#abreviar-btn').addEventListener('click', function() {
+            const nomeInput = document.querySelector('#nome-input')
+            const resultado = document.querySelector('#resultado')
+            const nomeCompleto = nomeInput.value.trim()
+
+            if (!nomeCompleto) {
+                resultado.innerHTML = '<span style="color: red;">Por favor, digite um nome!</span>'
+                nomeInput.focus()
+                return
+            }
+
+            let listaNomes = nomeCompleto.split(' ')
+
+            let nomesAbbr = listaNomes.map(nome => {
+                if (nome.length > 2) {
+                    return `${nome[0].toUpperCase()}.`
+                }
+                return nome
+            })
+
+            resultado.innerHTML = `<span style="color: blue; font-weight: bold;">Abreviação: ${nomesAbbr.join(' ')}</span>`
+
+            nomeInput.value = ''
+            nomeInput.focus()
+        })
+
+        document.querySelector('#nome-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#abreviar-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

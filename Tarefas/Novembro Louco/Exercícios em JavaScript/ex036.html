@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas de Salários</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estatísticas de Salários</h1>
+    
+    <div class="instruction" id="instruction">Informe a quantidade de funcionários:</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite a quantidade">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let quantidadeFuncionarios
+        let salarios = []
+        let funcionarioAtual = 0
+        let etapa = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                quantidadeFuncionarios = parseInt(valorInput.value)
+                
+                if (isNaN(quantidadeFuncionarios) || quantidadeFuncionarios <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Quantidade inválida!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 1
+                instruction.textContent = `Digite o nome do 1º funcionário:`
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                const nome = valorInput.value.trim()
+                
+                if (!nome) {
+                    resultado.innerHTML = '<span style="color: red;">Nome inválido!</span>'
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 2
+                instruction.textContent = `Informe o salário de ${nome}:`
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 2) {
+                const salario = parseFloat(valorInput.value)
+                
+                if (isNaN(salario) || salario <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Salário inválido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+                
+                salarios.push(salario)
+                funcionarioAtual++
+                
+                if (funcionarioAtual < quantidadeFuncionarios) {
+                    etapa = 1
+                    instruction.textContent = `Digite o nome do ${funcionarioAtual + 1}º funcionário:`
+                    resultado.innerHTML = `<span style="color: green;">Funcionário ${funcionarioAtual} cadastrado!</span>`
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else {
+                    let somaSalarios = salarios.reduce((ac, valor) => ac + valor, 0)
+                    let mediaSalarios = somaSalarios / salarios.length
+                    let salarioMaisAlto = Math.max(...salarios)
+                    let salarioMaisBaixo = Math.min(...salarios)
+
+                    resultado.innerHTML = `
+                        <div style="color: blue; font-weight: bold;">Média dos salários: R$ ${mediaSalarios.toFixed(1)}</div>
+                        <div style="color: green; font-weight: bold;">Salário mais alto: R$ ${salarioMaisAlto.toFixed(1)}</div>
+                        <div style="color: red; font-weight: bold;">Salário mais baixo: R$ ${salarioMaisBaixo.toFixed(1)}</div>
+                    `
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Calcular Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        salarios = []
+                        funcionarioAtual = 0
+                        etapa = 0
+                        instruction.textContent = 'Informe a quantidade de funcionários:'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                }
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

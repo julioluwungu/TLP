@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soma de Números</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Soma de Números</h1>
+    
+    <div class="instruction">Clique no botão para calcular a soma dos números ímpares múltiplos de três entre 1 e 500:</div>
+    
+    <button id="calcular-btn">Calcular Soma</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        document.querySelector('#calcular-btn').addEventListener('click', function() {
+            let soma = 0
+
+            for (let c = 1; c <= 500; c++) {
+                if (c % 2 !== 0 && c % 3 === 0) {
+                    soma += c
+                }
+            }
+
+            const resultado = document.querySelector('#resultado')
+            resultado.innerHTML = `<span style="color: blue; font-weight: bold;">A soma de todos os números ímpares múltiplos de três entre 1 e 500 é: ${soma}</span>`
+        })
+    </script>
+</body>
+</html>

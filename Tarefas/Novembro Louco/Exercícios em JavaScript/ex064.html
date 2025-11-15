@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle do Hotel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Controle do Hotel</h1>
+    
+    <div class="instruction" id="instruction">Informe o nome do cliente (ou 'sair' para encerrar):</div>
+    
+    <input type="text" id="valor-input" placeholder="Digite o nome">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let diaria = 50
+        let totalGanhoHotel = 0
+        let etapa = 0
+        let nomeAtual
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                const nome = valorInput.value.trim()
+                
+                if (nome.toLowerCase() === 'sair') {
+                    if (totalGanhoHotel === 0) {
+                        resultado.innerHTML = '<span style="color: red;">Nenhum cliente foi cadastrado!</span>'
+                        return
+                    }
+                    
+                    resultado.innerHTML = `<span style="color: blue; font-weight: bold;">Total ganho pelo hotel: R$ ${totalGanhoHotel.toFixed(2)}</span>`
+                    
+                    document.querySelector('#proximo-btn').textContent = 'Calcular Novamente'
+                    document.querySelector('#proximo-btn').addEventListener('click', function() {
+                        totalGanhoHotel = 0
+                        etapa = 0
+                        instruction.textContent = 'Informe o nome do cliente (ou "sair" para encerrar):'
+                        resultado.innerHTML = ''
+                        valorInput.value = ''
+                        valorInput.focus()
+                        this.textContent = 'Próximo'
+                    }, { once: true })
+                    return
+                }
+                
+                if (!nome) {
+                    resultado.innerHTML = '<span style="color: red;">Por favor, digite um nome!</span>'
+                    valorInput.focus()
+                    return
+                }
+                
+                nomeAtual = nome
+                etapa = 1
+                instruction.textContent = 'Informe o número de diárias:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                const numDiarias = parseInt(valorInput.value)
+                
+                if (isNaN(numDiarias) || numDiarias <= 0) {
+                    resultado.innerHTML = '<span style="color: red;">Número de diárias inválido!</span>'
+                    valorInput.value = ''
+                    valorInput.focus()
+                    return
+                }
+
+                let taxaServico
+                if (numDiarias < 15) {
+                    taxaServico = 4
+                } else if (numDiarias === 15) {
+                    taxaServico = 3.6
+                } else {
+                    taxaServico = 3
+                }
+
+                let totalConta = (diaria + taxaServico) * numDiarias
+                totalGanhoHotel += totalConta
+
+                resultado.innerHTML = `
+                    <div style="color: blue; font-weight: bold;">Nome do cliente: ${nomeAtual}</div>
+                    <div style="color: blue; font-weight: bold;">Total da conta: R$ ${totalConta.toFixed(2)}</div>
+                `
+                
+                etapa = 0
+                instruction.textContent = 'Informe o nome do cliente (ou "sair" para encerrar):'
+                valorInput.value = ''
+                valorInput.focus()
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

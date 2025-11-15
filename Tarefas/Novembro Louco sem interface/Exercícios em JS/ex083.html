@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de Entradas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 250px
+        }
+        .feedback {
+            color: red;
+            margin-top: 10px
+        }
+    </style>
+</head>
+<body>
+    <h1>Validação de Entradas</h1>
+
+    <h2>Receber apenas Números</h2>
+    <input type="text" id="numeros" placeholder="Digite apenas números" oninput="validarNumeros(this)">
+    <p class="feedback" id="feedbackNumeros"></p>
+
+    <h2>Receber apenas Texto</h2>
+    <input type="text" id="texto" placeholder="Digite apenas texto" oninput="validarTexto(this)">
+    <p class="feedback" id="feedbackTexto"></p>
+
+    <h2>Receber apenas Números Pares</h2>
+    <input type="text" id="numerosPares" placeholder="Digite apenas números pares" oninput="validarNumerosPares(this)">
+    <p class="feedback" id="feedbackNumerosPares"></p>
+
+    <h2>Receber apenas Vogais</h2>
+    <input type="text" id="vogais" placeholder="Digite apenas vogais" oninput="validarVogais(this)">
+    <p class="feedback" id="feedbackVogais"></p>
+
+    <h2>Receber apenas Números Primos</h2>
+    <input type="text" id="numerosPrimos" placeholder="Digite apenas números primos" oninput="validarNumerosPrimos(this)">
+    <p class="feedback" id="feedbackNumerosPrimos"></p>
+
+    <h2>Receber apenas Valores de uma Lista</h2>
+    <input type="text" id="valoresLista" placeholder="Digite valor da lista (1, 2, 3)" oninput="validarValoresLista(this)">
+    <p class="feedback" id="feedbackValoresLista"></p>
+
+    <script>
+        let listaValores = [1, 2, 3]
+
+        function validarNumeros(input) {
+            let valor = input.value
+            let validado = /^[0-9]*$/.test(valor)
+            feedback('feedbackNumeros', validado, input)
+        }
+
+        function validarTexto(input) {
+            let valor = input.value
+            let validado = /^[a-zA-Z]*$/.test(valor)
+            feedback('feedbackTexto', validado, input)
+        }
+
+        function validarNumerosPares(input) {
+            let valor = parseInt(input.value)
+            let validado = !isNaN(valor) && valor % 2 === 0
+            feedback('feedbackNumerosPares', validado, input)
+        }
+
+        function validarVogais(input) {
+            let valor = input.value
+            let validado = /^[aeiouáéíóúãâêîôû]*$/i.test(valor)
+            feedback('feedbackVogais', validado, input)
+        }
+
+        function validarNumerosPrimos(input) {
+            let valor = parseInt(input.value)
+            let validado = ehPrimo(valor)
+            feedback('feedbackNumerosPrimos', validado, input)
+        }
+
+        function validarValoresLista(input) {
+            let valor = parseInt(input.value)
+            let validado = listaValores.includes(valor)
+            feedback('feedbackValoresLista', validado, input)
+        }
+
+        function feedback(feedbackId, isValid, input) {
+            let feedbackElement = document.getElementById(feedbackId)
+            if (isValid) {
+                feedbackElement.textContent = ''
+                input.style.borderColor = 'green'
+            } else {
+                feedbackElement.textContent = 'Entrada inválida.'
+                input.style.borderColor = 'red'
+            }
+        }
+
+        function ehPrimo(num) {
+            if (num <= 1) return false
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false
+            }
+            return true
+        }
+    </script>
+</body>
+</html>

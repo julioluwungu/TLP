@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparador de Palavras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Comparador de Palavras</h1>
+    
+    <div class="instruction" id="instruction">Digite a 1ª palavra:</div>
+    
+    <input type="text" id="palavra-input" placeholder="Digite uma palavra">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let palavras = []
+        let palavraAtual = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const palavraInput = document.querySelector('#palavra-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            const palavra = palavraInput.value.trim()
+            
+            if (!palavra) {
+                resultado.innerHTML = '<span style="color: red;">Por favor, digite uma palavra!</span>'
+                palavraInput.focus()
+                return
+            }
+            
+            palavras.push(palavra)
+            palavraAtual++
+            
+            if (palavraAtual < 2) {
+                instruction.textContent = `Digite a ${palavraAtual + 1}ª palavra:`
+                resultado.innerHTML = ''
+                palavraInput.value = ''
+                palavraInput.focus()
+            } else {
+                if (palavras[0] === palavras[1]) {
+                    resultado.innerHTML = '<span style="color: blue; font-weight: bold;">As palavras digitadas são iguais.</span>'
+                } else {
+                    let resultadoHTML = ''
+                    
+                    if (palavras[0].length > palavras[1].length) {
+                        resultadoHTML += `<div>A palavra "${palavras[0]}" tem maior comprimento em relação à palavra "${palavras[1]}"</div>`
+                    } else if (palavras[1].length > palavras[0].length) {
+                        resultadoHTML += `<div>A palavra "${palavras[1]}" tem maior comprimento em relação à palavra "${palavras[0]}"</div>`
+                    } else {
+                        resultadoHTML += `<div>A palavra "${palavras[0]}" e a palavra "${palavras[1]}" têm o mesmo comprimento.</div>`
+                    }
+                    
+                    if (palavras[0].includes(palavras[1])) {
+                        resultadoHTML += `<div>A palavra "${palavras[1]}" é uma substring da palavra "${palavras[0]}".</div>`
+                    }
+                    
+                    resultado.innerHTML = resultadoHTML
+                }
+                
+                document.querySelector('#proximo-btn').textContent = 'Comparar Novamente'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    palavras = []
+                    palavraAtual = 0
+                    instruction.textContent = 'Digite a 1ª palavra:'
+                    resultado.innerHTML = ''
+                    palavraInput.value = ''
+                    palavraInput.focus()
+                    this.textContent = 'Próximo'
+                }, { once: true })
+            }
+        })
+
+        document.querySelector('#palavra-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

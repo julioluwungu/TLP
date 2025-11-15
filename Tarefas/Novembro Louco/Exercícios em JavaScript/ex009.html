@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Reflexo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .valor-sorteado {
+            font-size: 48px;
+            font-weight: bold;
+            color: blue;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jogo de Reflexo</h1>
+    
+    <div class="instruction" id="instruction">Clique no botão para iniciar o jogo:</div>
+    
+    <button id="iniciar-btn">Iniciar Jogo</button>
+    
+    <div id="jogo-area" style="display: none;">
+        <div class="valor-sorteado" id="valor-sorteado"></div>
+        <input type="number" id="resposta-input" placeholder="Digite o valor que apareceu">
+        <button id="enviar-btn">Enviar Resposta</button>
+    </div>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let valorSorteado
+        let tempoInicial
+        
+        document.querySelector('#iniciar-btn').addEventListener('click', function() {
+            const instruction = document.querySelector('#instruction')
+            const jogoArea = document.querySelector('#jogo-area')
+            const resultado = document.querySelector('#resultado')
+            
+            instruction.textContent = 'Aguarde o valor aparecer...'
+            resultado.innerHTML = ''
+            this.style.display = 'none'
+            jogoArea.style.display = 'block'
+            
+            let tempoSorteado = Math.floor(Math.random() * 10)
+            
+            setTimeout(() => {
+                valorSorteado = Math.floor(Math.random() * 20 + 1)
+                document.querySelector('#valor-sorteado').textContent = valorSorteado
+                tempoInicial = Date.now()
+            }, tempoSorteado * 1000)
+        })
+
+        document.querySelector('#enviar-btn').addEventListener('click', function() {
+            const respostaInput = document.querySelector('#resposta-input')
+            const resultado = document.querySelector('#resultado')
+            const num = parseInt(respostaInput.value)
+            
+            if (isNaN(num)) {
+                resultado.innerHTML = '<span style="color: red;">Por favor, digite um número válido!</span>'
+                return
+            }
+            
+            if (num === valorSorteado) {
+                let tempoFinal = Date.now()
+                let tempoFeito = (tempoFinal - tempoInicial) / 1000
+                resultado.innerHTML = `<span style="color: green; font-weight: bold;">Demorou ${tempoFeito} segundos para acertar.</span>`
+                
+                document.querySelector('#iniciar-btn').style.display = 'block'
+                document.querySelector('#iniciar-btn').textContent = 'Jogar Novamente'
+                document.querySelector('#jogo-area').style.display = 'none'
+                document.querySelector('#valor-sorteado').textContent = ''
+                respostaInput.value = ''
+            } else {
+                resultado.innerHTML = '<span style="color: red;">Valor incorreto. Por favor, digite o valor correto!</span>'
+                respostaInput.value = ''
+                respostaInput.focus()
+            }
+        })
+
+        document.querySelector('#resposta-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#enviar-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparador de Valores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Comparador de Valores</h1>
+    
+    <div class="instruction" id="instruction">Digite o 1º valor inteiro:</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite um número inteiro">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let valores = []
+        let valorAtual = 0
+        let etapa = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            const num = Number(valorInput.value)
+            
+            if (isNaN(num)) {
+                resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número válido!</span>'
+                valorInput.value = ''
+                valorInput.focus()
+                return
+            }
+            
+            if (etapa === 0) {
+                valores.push(num)
+                valorAtual++
+                
+                if (valorAtual < 10) {
+                    instruction.textContent = `Digite o ${valorAtual + 1}º valor inteiro:`
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                } else {
+                    etapa = 1
+                    instruction.textContent = 'Digite um outro valor:'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                }
+            } else {
+                let outroValor = num
+                let inferiores = valores.filter(val => val < outroValor)
+                
+                resultado.innerHTML = `
+                    <div style="margin-bottom: 10px;">Dentre os valores digitados anteriormente, ${inferiores.length} são inferiores à ${outroValor}</div>
+                    <div style="color: blue; font-weight: bold;">Eles são: ${inferiores.join(', ')}</div>
+                `
+                
+                document.querySelector('#proximo-btn').textContent = 'Comparar Novamente'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    valores = []
+                    valorAtual = 0
+                    etapa = 0
+                    instruction.textContent = 'Digite o 1º valor inteiro:'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                    this.textContent = 'Próximo'
+                }, { once: true })
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

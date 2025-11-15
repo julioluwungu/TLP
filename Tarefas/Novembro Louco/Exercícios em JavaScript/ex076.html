@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Substituidor de Palavras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Substituidor de Palavras</h1>
+    
+    <div class="instruction" id="instruction">Digite uma frase:</div>
+    
+    <input type="text" id="valor-input" placeholder="Digite uma frase">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let frase
+        let palavraAntiga
+        let etapa = 0
+        
+        function substituirUltimaOcorrencia(frase, palavraAntiga, palavraNova) {
+            let ultimaOcorrencia = frase.lastIndexOf(palavraAntiga)
+
+            if (ultimaOcorrencia === -1) {
+                return frase
+            }
+
+            return frase.slice(0, ultimaOcorrencia) + palavraNova + frase.slice(ultimaOcorrencia + palavraAntiga.length)
+        }
+
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            if (etapa === 0) {
+                frase = valorInput.value.trim()
+                
+                if (!frase) {
+                    resultado.innerHTML = '<span style="color: red;">Por favor, digite uma frase!</span>'
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 1
+                instruction.textContent = 'Digite a palavra antiga:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 1) {
+                palavraAntiga = valorInput.value.trim()
+                
+                if (!palavraAntiga) {
+                    resultado.innerHTML = '<span style="color: red;">Por favor, digite a palavra antiga!</span>'
+                    valorInput.focus()
+                    return
+                }
+                
+                etapa = 2
+                instruction.textContent = 'Digite a palavra nova:'
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+                
+            } else if (etapa === 2) {
+                const palavraNova = valorInput.value.trim()
+                
+                if (!palavraNova) {
+                    resultado.innerHTML = '<span style="color: red;">Por favor, digite a palavra nova!</span>'
+                    valorInput.focus()
+                    return
+                }
+                
+                let resultadoFinal = substituirUltimaOcorrencia(frase, palavraAntiga, palavraNova)
+                
+                resultado.innerHTML = `<span style="color: blue; font-weight: bold;">Resultado: ${resultadoFinal}</span>`
+                
+                document.querySelector('#proximo-btn').textContent = 'Substituir Novamente'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    etapa = 0
+                    instruction.textContent = 'Digite uma frase:'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                    this.textContent = 'Próximo'
+                }, { once: true })
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>

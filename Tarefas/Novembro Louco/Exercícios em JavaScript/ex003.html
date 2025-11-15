@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Triângulo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Verificador de Triângulo</h1>
+    
+    <div class="instruction" id="instruction">Digite o valor inteiro de X:</div>
+    
+    <input type="number" id="valor-input" placeholder="Digite um número positivo" min="1">
+    
+    <button id="proximo-btn">Próximo</button>
+    
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        let letras = ["X", "Y", "Z"]
+        let valores = []
+        let valorAtual = 0
+        
+        document.querySelector('#proximo-btn').addEventListener('click', function() {
+            const valorInput = document.querySelector('#valor-input')
+            const resultado = document.querySelector('#resultado')
+            const instruction = document.querySelector('#instruction')
+            
+            const num = parseInt(valorInput.value)
+            
+            if (isNaN(num) || num <= 0) {
+                resultado.innerHTML = '<span style="color: red;">Valor inválido! Por favor, digite um número válido!</span>'
+                valorInput.value = ''
+                valorInput.focus()
+                return
+            }
+            
+            valores.push(num)
+            valorAtual++
+            
+            if (valorAtual < 3) {
+                instruction.textContent = `Digite o valor inteiro de ${letras[valorAtual]}:`
+                resultado.innerHTML = ''
+                valorInput.value = ''
+                valorInput.focus()
+            } else {
+                if (
+                    valores[0] < valores[1] + valores[2] &&
+                    valores[1] < valores[0] + valores[2] &&
+                    valores[2] < valores[0] + valores[1]
+                ) {
+                    if (valores[0] === valores[1] && valores[0] === valores[2]) {
+                        resultado.innerHTML = '<span style="color: blue; font-weight: bold;">Triângulo Equilátero!</span>'
+                    } else if (valores[0] === valores[1] || valores[0] === valores[2] || valores[1] === valores[2]) {
+                        resultado.innerHTML = '<span style="color: green; font-weight: bold;">Triângulo Isósceles!</span>'
+                    } else {
+                        resultado.innerHTML = '<span style="color: orange; font-weight: bold;">Triângulo Escaleno!</span>'
+                    }
+                } else {
+                    resultado.innerHTML = '<span style="color: red; font-weight: bold;">Não é possível formar um triângulo com os valores fornecidos!</span>'
+                }
+                
+                document.querySelector('#proximo-btn').textContent = 'Verificar Novamente'
+                document.querySelector('#proximo-btn').addEventListener('click', function() {
+                    valores = []
+                    valorAtual = 0
+                    instruction.textContent = 'Digite o valor inteiro de X:'
+                    resultado.innerHTML = ''
+                    valorInput.value = ''
+                    valorInput.focus()
+                    this.textContent = 'Próximo'
+                }, { once: true })
+            }
+        })
+
+        document.querySelector('#valor-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('#proximo-btn').click()
+            }
+        })
+    </script>
+</body>
+</html>
