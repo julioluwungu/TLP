@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulos</title>
+</head>
+
+<body>
+
+    <script>
+        let dados = []
+        let texto = ''
+
+        for (let c = 0; c < 5; c++) {
+            let nome = prompt(`Digite o nome da ${c + 1}ª pessoa: `)
+            let sexo
+            while (true) {
+                sexo = prompt('Digite o seu sexo [M/F]: ')
+                if (['M', 'F'].includes(sexo.toUpperCase())) break
+                else alert('Sexo incorreto. Digite "M" ou "F"')
+            }
+            dados.push({ nome, sexo })
+        }
+        dados.forEach(elemento => texto += `Nome: ${elemento.nome}. Sexo: ${elemento.sexo.toUpperCase()}\n`)
+        alert(texto)
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.container {
+            border: 2px solid black;
+            padding: 10px;
+        }
+
+        h2 ~ p {
+            color: green;
+            text-transform: capitalize;
+        }
+
+        p::spelling-error {
+            text-decoration: wavy red underline;
+        }
+
+        div.campo {
+            width: 250px;
+            height: 250px;
+            border: 2px solid black;
+            margin: 10px;
+        }
+
+        div.campo:active {
+            background-color: red;
+        }
+
+        p.deletar {
+            text-decoration: overline wavy blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="par">primeiro parágrafo antes do título. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod doloribus ut minima omnis sequi magnam, eaque quam rerum sint laborum amet eum aliquid corporis vitae saepe molestiae dolorum, adipisci facilis? estudarndo</p>
+        <h2>Título</h2>
+        <p>primeiro parágrafo após o título.</p>
+        <p>segundo parágrafo após o título.</p>
+    </div>
+
+    <div class="campo">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ut ab maiores reprehenderit optio ipsum quam ratione iure esse! Deleniti veniam aliquid delectus odio consequuntur hic ad consectetur eius et! <a href="#">Oi</a>
+    </div>
+    <p class="deletar">Excluído</p>
+</body>
+</html>

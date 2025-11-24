@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt</title>
+</head>
+<body>
+    
+    <script>
+
+        const pessoas = []
+
+        function getInfo(){
+            let name = prompt('Qual o seu nome?')
+
+            while(true){
+                let sexo = (prompt('Qual o seu genero?')).toString()
+                
+                if(sexo === 'M' || sexo === 'F'){
+                    pessoas.push({ name, sexo })
+                    break;
+                } else {
+                    alert('Digite apenas "M" ou "F"')
+                    continue;
+                }
+            }
+        }
+
+        getInfo()
+        pessoas.forEach(obj => {
+            console.log(obj)
+        });
+
+    </script>
+</body>
+</html>
