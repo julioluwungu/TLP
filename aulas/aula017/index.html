@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div#drop {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="drop">Larga aqui</div>
+
+    <script>
+        const drop = document.querySelector('div#drop')
+
+        drop.addEventListener('dragover', (e) => e.preventDefault())
+        drop.addEventListener('drop', (e) => {
+            e.preventDefault()
+            const file = e.dataTransfer.files[0]
+            const reader = new FileReader()
+
+            reader.onload = () => { console.log(`Arquivo lido em TXT: ${reader.result}`) }
+
+            reader.readAsText(file, 'UTF-8')
+        })
+
+        // O preventDefault - previne que o Browser faça reload
+
+        // const input = document.querySelector('input#ficheiro')
+        // input.addEventListener('change', () => {
+        //     const file = input.files[0]
+
+        //     if(!file) return alert('Não li o arquivo.')
+
+        //     const reader = new FileReader()
+
+        //     reader.onload = () => {console.log(`Arquivo lido em TXT: ${reader.result}`)}
+
+        //     reader.readAsText(file, 'UTF-8')
+        // })
+
+        // Estudar
+        // Sub-propriedades de CSS
+        // Teoria em JavaScript
+        // Jogo da Velha completo (HTML, CSS e JS)
+    </script>
+</body>
+
+</html>
+

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const text = 'Lukoki usa GPT'
+        const blob = new Blob([text], {type: 'text/plain'})
+
+        const url = URL.createObjectURL(blob)
+
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'lukoki.txt'
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+
+        URL.revokeObjectURL(url)
+    </script>
+</body>
+</html>

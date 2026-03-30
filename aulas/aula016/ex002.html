@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let vetor = prompt('Digite um array de palavras separados por vírgula: ').toLowerCase()
+        vetor = vetor.replaceAll(' ', '').split(',')
+
+        let primeirasLetras = []
+
+        for (elemento of vetor) primeirasLetras.push(elemento[0])
+
+        primeirasLetras = [... new Set(primeirasLetras)]
+
+        let auxiliar = []
+        let dicionario = {}
+
+        for (letra of primeirasLetras) {
+            for (elemento of vetor) {
+                if (letra == elemento[0]) auxiliar.push(elemento)
+            }
+            dicionario[letra] = [... auxiliar]
+            auxiliar.length = 0
+        }
+
+        let texto = ''
+
+        for (let [c, v] of Object.entries(dicionario)) {
+            texto += `${c}: [${v}]\n`
+        }
+
+        alert(texto)
+    </script>
+</body>
+</html>

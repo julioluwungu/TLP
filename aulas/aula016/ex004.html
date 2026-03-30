@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        let frase = prompt('Digite uma frase: ').toLowerCase()
+        let lista = frase.replaceAll(' ', '').split('')
+
+        let vetor = ['áàâã', 'éèê', 'íìî', 'óòõô', 'úùû']
+        let vogais = ['a', 'e', 'i', 'o', 'u']
+
+        let vetorFormatado = lista.map(elemento => {
+            for (let c in vetor) {
+                if (vetor[c].includes(elemento)) return vogais[c]
+            }
+            return elemento
+        })
+
+        let fraseFormatada = vetorFormatado.join('')
+        let fraseReversa = vetorFormatado.reverse().join('')
+
+        if (fraseFormatada == fraseReversa) alert('A frase digitada é um palíndromo!')
+        else alert('A frase digitada não é um palíndromo!')
+    </script>
+</body>
+</html>

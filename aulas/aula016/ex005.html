@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        let maiusculas = /[^a-zA-Z]/gi
+        let numeros = /\d/g
+        let minusculas = maiusculas.toLowerCase()
+        let caracteres = maiusculas + numeros
+
+        let senha = prompt('Digite uma senha: ').replaceAll(' ', '').split('')
+
+        let c1 = senha.length >= 8
+        let c2 = false
+        let c3 = false
+        let c4 = false
+
+        for (elemento of senha) {
+            if (maiusculas.includes(elemento)) c2 = true
+            if (numeros.includes(elemento)) c3 = true
+            if (!caracteres.includes(elemento.toUpperCase())) c4 = true
+        }
+
+        if (c1 && c2 && c3 && c4) alert('Senha Forte!')
+        else alert('Senha fraca!')
+
+    </script>
+</body>
+</html>

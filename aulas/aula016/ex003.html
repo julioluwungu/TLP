@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let vetor = prompt('Digite um array de números separados por vírgula: ')
+        vetor = vetor.replaceAll(' ', '').split(',')
+        vetor = vetor.map(elemento => Number(elemento))
+        vetor.sort((a,b) => a - b)
+
+        let falta = []
+
+        for (let c = vetor[0]; c < vetor.at(-1); c++) {
+            if (!vetor.includes(c)) falta.push(c)
+        }
+
+        if (falta.length == 0) alert('Não há nenhum número em falta!')
+        else alert(`Os números em falta são: ${falta}`)
+   </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let numN = Number(prompt('Digite um número N: '))
+        let primeiro = Number(prompt('Digite o primeiro valor: '))
+        let segundo = Number(prompt('Digite o segundo valor: '))
+
+        let lista = []
+        lista.push(primeiro, segundo)
+
+        for (let c = 2; c < numN; c++) {
+            lista.push(lista[c-1] + lista[c-2])
+        }
+
+        let listaFormatada = lista.join(', ')
+        alert(listaFormatada)
+    </script>
+</body>
+
+</html>
